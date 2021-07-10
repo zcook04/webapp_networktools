@@ -18,7 +18,7 @@ function RunningConfig() {
     },[])
 
     return (
-        <div>
+        <div className="page-wrapper">
             {runningConfig && runningConfig}
         </div>
     )
