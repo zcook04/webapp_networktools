@@ -1,6 +1,8 @@
 import {React, useState, useEffect} from 'react'
 import axios from 'axios'
 
+//Needs to be a protected page.
+
 function MyDevices() {
     const [myDevices, setMyDevices] = useState([])
 
