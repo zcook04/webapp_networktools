@@ -2,7 +2,7 @@ import React from 'react'
 import '../css/header.css'
 import { Link } from 'react-router-dom'
 
-function header() {
+function header(props) {
     return (
         <header className="header">
             <div className="header-wrapper">
@@ -26,4 +26,4 @@ function header() {
     )
 }
 
-export default header
+export default (header)

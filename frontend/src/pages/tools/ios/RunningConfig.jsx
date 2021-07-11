@@ -1,19 +1,22 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import { connect } from 'react-redux'
+import { getDevices } from '../../../actions/deviceActions'
 
-function RunningConfig() {
+function RunningConfig(props) {
     const [runningConfig, setRunningConfig] = useState(null)
-
     const [ipv4, setIpv4] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
+    const getDevices = props.getDevice
+    
     const getConfig = async (e) => {
         e.preventDefault()
         if (ipv4 && username && password) {
             const data = await axios.post('/api/v1/running-config', {"ipv4": ipv4, "username": username, "password": password})
             if (data) {
                 setRunningConfig(data['data'].split('\n'))
+                getDevices()
             }
         } else {
             console.log('Input username, password and ipv4 address.')
@@ -50,4 +53,12 @@ function RunningConfig() {
     )
 }
 
-export default RunningConfig
+const mapDispatchToProps = {
+    getDevices
+}
+
+const mapStateToProps = (state) => ({
+    devices: state.deviceState
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RunningConfig)
