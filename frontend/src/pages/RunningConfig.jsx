@@ -13,7 +13,7 @@ function RunningConfig() {
         if (ipv4 && username && password) {
             const data = await axios.post('/api/v1/running-config', {"ipv4": ipv4, "username": username, "password": password})
             if (data) {
-                setRunningConfig(data)
+                setRunningConfig(data['data'].split('\n'))
             }
         } else {
             console.log('Input username, password and ipv4 address.')
@@ -45,7 +45,7 @@ function RunningConfig() {
                 <input type='text' value={password} onChange={handleChange} name='password' />
                 <input type='submit' value='submit'/>
             </form>
-            {runningConfig && runningConfig}
+            {runningConfig && runningConfig.map((i, key) => <div key={key}>{i}</div>)}
         </div>
     )
 }

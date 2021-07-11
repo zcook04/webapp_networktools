@@ -1,7 +1,7 @@
+from RunningConfiguration import RunningConfiguration
 from flask import Flask
 # from flask.templating import render_template
 from flask_restful import Api
-from RunningConfiguration import RunningConfiguration
 
 app = Flask(__name__, static_folder='../frontend/build/static',
             template_folder='../frontend/build')
