@@ -1,11 +1,12 @@
+from flask_restful import Resource, reqparse
+from flask_jwt_extended import jwt_required
 
 from netmiko import ConnectHandler, NetMikoAuthenticationException
-from flask_restful import Resource, reqparse
-
 from netmiko.ssh_exception import NetmikoTimeoutException
 
 
 class RunningConfiguration(Resource):
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('ipv4', type=str, required=True)
