@@ -5,23 +5,30 @@ import { getDevices } from '../../../actions/deviceActions'
 
 function RunningConfig(props) {
     const [runningConfig, setRunningConfig] = useState(null)
+    const [configGetError, setConfigGetError] = useState(false)
     const [ipv4, setIpv4] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const getDevices = props.getDevice
+    const [loading, setLoading] = useState(false)
     
     const getConfig = async (e) => {
         e.preventDefault()
         if (ipv4 && username && password) {
-            const data = await axios.post('/api/v1/running-config', {"ipv4": ipv4, "username": username, "password": password})
-            if (data) {
+            setLoading(true)
+            setRunningConfig("")
+            setConfigGetError(false)
+            try {
+                const data = await axios.post('/api/v1/running-config', {"ipv4": ipv4, "username": username, "password": password})
                 setRunningConfig(data['data'].split('\n'))
-                getDevices()
+                setConfigGetError(false)
+            } catch (err) {
+                setConfigGetError(err)
             }
-        } else {
-            console.log('Input username, password and ipv4 address.')
+            setLoading(false)
+            } else {
+                console.log('Input username, password and ipv4 address.')
+                } 
         }
-    }
 
     const handleChange = (e) => {
         switch (e.target.name) {
@@ -48,6 +55,8 @@ function RunningConfig(props) {
                 <input type='password' value={password} placerholder="Password" onChange={handleChange} name='password' />
                 <input type='submit' value='submit'/>
             </form>
+            {loading && <div><h3>Please wait</h3><p>Attempting to retrieve running configuration</p></div>}
+            {configGetError && <div><h3>And Error Occured</h3><p>Error retrieving running configuration</p></div>}
             {runningConfig && runningConfig.map((i, key) => <div key={key}>{i}</div>)}
         </div>
     )

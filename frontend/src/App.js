@@ -1,7 +1,6 @@
 // MAIN PAGES
 import Home from "./pages/Home"
-import Blog from "./pages/Blog"
-import About from "./pages/About"
+import MyDevices from './pages/MyDevices'
 import Tools from "./pages/tools/Tools"
 import Login from "./pages/Login"
 
@@ -30,8 +29,7 @@ function App() {
           <Route path="/tools/ios/running-config" component={RunningConfig} />
           <Route exact path="/tools/ios" component={IosTools} />
           <Route exact path="/tools" component={Tools} />
-          <Route path="/blog" component={Blog} />
-          <Route path="/about" component={About} />
+          <Route path="/mydevices" component={MyDevices} />
           <Route path="/login" component={Login} />
           <Route exact path="/" component={Home} />
         </Switch>

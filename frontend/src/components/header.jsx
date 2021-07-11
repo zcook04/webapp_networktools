@@ -2,18 +2,20 @@ import React from 'react'
 import '../css/header.css'
 import { Link } from 'react-router-dom'
 
-function header(props) {
+function header() {
     return (
         <header className="header">
             <div className="header-wrapper">
-                <div className="header-logo">ZACK-COOK</div>
+                <div className="header-logo">
+                    <Link to="/">ZACK-COOK</Link>
+                </div>
                 <nav className="header-nav">
                     <ul>
                         <li>
-                            <Link to="/about">ABOUT</Link>
+                            <Link to="/mydevices">MY-DEVICES</Link>
                         </li>
                         <li>
-                            <Link to="/blog">BLOG</Link>
+                            <Link to="/configure" >CONFIGURE</Link>
                         </li>
                         <li>
                             <Link to="/tools">TOOLS</Link>
