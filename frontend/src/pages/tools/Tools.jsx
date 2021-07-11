@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Tools() {
     return (
         <div className="page-wrapper">
-            This is my tools page placeholder text
+            <Link to='/tools/ios'>IOS Tools</Link>
         </div>
     )
 }

@@ -1,10 +1,14 @@
-// PAGES
-import RunningConfig from "./pages/RunningConfig";
+// MAIN PAGES
 import Home from "./pages/Home"
 import Blog from "./pages/Blog"
 import About from "./pages/About"
-import Tools from "./pages/Tools"
+import Tools from "./pages/tools/Tools"
 import Login from "./pages/Login"
+
+//TOOLS
+import IosTools from "./pages/tools/ios/IosTools"
+import RunningConfig from "./pages/tools/ios/RunningConfig";
+
 
 // COMPONENTS
 import Header from "./components/header"
@@ -23,12 +27,13 @@ function App() {
       <Router>
       <Header />
         <Switch>
-          <Route path="/running-config"><RunningConfig/></Route>
-          <Router path="/blog"><Blog/></Router>
-          <Router path="/about"><About/></Router>
-          <Router path="/tools"><Tools/></Router>
-          <Router path="/login"><Login/></Router>
-          <Route path="/" exact><Home/></Route>
+          <Route path="/tools/ios/running-config" component={RunningConfig} />
+          <Route exact path="/tools/ios" component={IosTools} />
+          <Route exact path="/tools" component={Tools} />
+          <Route path="/blog" component={Blog} />
+          <Route path="/about" component={About} />
+          <Route path="/login" component={Login} />
+          <Route exact path="/" component={Home} />
         </Switch>
       <Footer />
       </Router>

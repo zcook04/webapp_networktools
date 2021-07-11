@@ -4,9 +4,9 @@ import axios from 'axios'
 function RunningConfig() {
     const [runningConfig, setRunningConfig] = useState(null)
 
-    const [ipv4, setIpv4] = useState("ipv4")
-    const [username, setUsername] = useState("Username")
-    const [password, setPassword] = useState("Password")
+    const [ipv4, setIpv4] = useState("")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
 
     const getConfig = async (e) => {
         e.preventDefault()
@@ -40,9 +40,9 @@ function RunningConfig() {
     return (
         <div className="page-wrapper">
             <form onSubmit={getConfig}>
-                <input type='text' value={ipv4} onChange={handleChange} name='ipv4' />
-                <input type='text' value={username} onChange={handleChange} name='username' />
-                <input type='text' value={password} onChange={handleChange} name='password' />
+                <input type='text' value={ipv4} placeholder="Ipv4" onChange={handleChange} name='ipv4' />
+                <input type='text' value={username} placeholder="Username" onChange={handleChange} name='username' />
+                <input type='password' value={password} placerholder="Password" onChange={handleChange} name='password' />
                 <input type='submit' value='submit'/>
             </form>
             {runningConfig && runningConfig.map((i, key) => <div key={key}>{i}</div>)}
