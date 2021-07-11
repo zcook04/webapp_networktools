@@ -1,4 +1,5 @@
 from RunningConfiguration import RunningConfiguration
+from MyDevices import MyDevices
 from flask import Flask
 # from flask.templating import render_template
 from flask_restful import Api
@@ -9,6 +10,8 @@ api = Api(app)
 
 api.add_resource(RunningConfiguration,
                  '/api/v1/running-config')
+
+api.add_resource(MyDevices, '/api/v1/<string:user>/mydevices')
 
 
 # Uncomment for production.

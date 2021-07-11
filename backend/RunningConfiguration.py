@@ -1,7 +1,6 @@
 
-from netmiko import ConnectHandler, NetMikoTimeoutException, NetMikoAuthenticationException
+from netmiko import ConnectHandler, NetMikoAuthenticationException
 from flask_restful import Resource, reqparse
-import json
 
 from netmiko.ssh_exception import NetmikoTimeoutException
 
