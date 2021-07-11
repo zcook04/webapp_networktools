@@ -1,7 +1,7 @@
 from RunningConfiguration import RunningConfiguration
 from MyDevices import MyDevices
+
 from flask import Flask
-# from flask.templating import render_template
 from flask_restful import Api
 
 app = Flask(__name__, static_folder='../frontend/build/static',
