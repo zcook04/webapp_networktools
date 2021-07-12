@@ -74,4 +74,4 @@ class LoginUser(Resource):
 # FOR TESTING DATABASE ONLY------------------------------------------------------------------------
 class AllUsers(Resource):
     def get(self):
-        return
+        return [usr for usr in mongo_client.db.users.find({}, {'_id': False, 'password': False})]
