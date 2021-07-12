@@ -1,7 +1,9 @@
 from flask import jsonify
 from flask_restful import Resource, reqparse
 from flask_sqlalchemy import SQLAlchemy
+
 from Models import User, db
+
 import sqlalchemy
 
 # JWT Token Import
@@ -9,6 +11,12 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
+
+# INIT BCRYPT
+import os
+import bcrypt
+BCRYPT_SECRET = os.environ.get('BCRYPT_SECRET')
+SALT = bcrypt.gensalt()
 
 
 class RegisterUser(Resource):
@@ -20,7 +28,7 @@ class RegisterUser(Resource):
         args = parser.parse_args()
 
         new_user = User(
-            username=args['username'], email=args['email'], password=args['password'])
+            username=args['username'], email=args['email'], password=bcrypt.hashpw(args['password'].encode('utf8'), SALT))
 
         try:
             db.session.add(new_user)
@@ -38,7 +46,7 @@ class LoginUser(Resource):
         args = parser.parse_args()
         user = User.query.filter_by(email=args['email']).first()
 
-        if user.password == args['password']:
-            return {"token": create_access_token(identity=args['email'])}, 200
+        if bcrypt.checkpw(args['password'].encode('utf8'), user.password):
+            return {"token": create_access_token(identity=args['email']), "username": user.username}, 200
         else:
             return {'msg': 'Invalid Credentials'}, 401

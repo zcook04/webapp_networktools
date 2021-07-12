@@ -32,6 +32,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # INIT DB
 db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 # TOOL ROUTES
 api.add_resource(RunningConfiguration,
