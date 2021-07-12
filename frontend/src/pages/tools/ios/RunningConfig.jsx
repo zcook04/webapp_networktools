@@ -18,7 +18,7 @@ function RunningConfig(props) {
             setRunningConfig("")
             setConfigGetError(false)
             try {
-                const data = await axios.post('/api/v1/running-config', {"ipv4": ipv4, "username": username, "password": password})
+                const data = await axios.post('/api/v1/tools/get-running-config', {"ipv4": ipv4, "username": username, "password": password})
                 setRunningConfig(data['data'].split('\n'))
                 setConfigGetError(false)
             } catch (err) {
