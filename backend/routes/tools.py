@@ -3,14 +3,16 @@ from flask_restful import Resource, reqparse
 from netmiko import ConnectHandler, NetMikoAuthenticationException
 from netmiko.ssh_exception import NetmikoTimeoutException
 
+# Init Parent Parser For IOS Devices.
+ios_device_parser = reqparse.RequestParser()
+ios_device_parser.add_argument('ipv4', type=str, required=True)
+ios_device_parser.add_argument('username', type=str, required=True)
+ios_device_parser.add_argument('password', type=str, required=True)
+
 
 class RunningConfiguration(Resource):
     def post(self):
-        parser = reqparse.RequestParser()
-        parser.add_argument('ipv4', type=str, required=True)
-        parser.add_argument('username', type=str, required=True)
-        parser.add_argument('password', type=str, required=True)
-        args = parser.parse_args()
+        args = ios_device_parser.copy().parse_args()
         try:
             ssh_connection = ConnectHandler(
                 device_type='cisco_ios', ip=args['ipv4'], username=args['username'], password=args['password'], timeout=15)
