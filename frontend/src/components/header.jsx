@@ -32,7 +32,7 @@ function Header(props) {
                             <Link to="/tools">TOOLS</Link>
                         </li>
                         <li>
-                            {isAuthenticated ? <Link onClick={logoutHandler}>LOGOUT</Link> : <Link to="/login">LOGIN</Link>}
+                            {isAuthenticated ? <Link to="" onClick={logoutHandler}>LOGOUT</Link> : <Link to="/login">LOGIN</Link>}
                         </li>
                     </ul>
                 </nav>

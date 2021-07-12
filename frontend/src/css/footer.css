@@ -1,7 +1,6 @@
 footer {
     color: var(--color-orange);
     background-color: var(--color-black-dark);
-    width: 100vw;
     height: 100px;
 }
 

@@ -1,5 +1,4 @@
 .header {
-    width: 100vw;
     background-color: var(--color-black-dark);
     border-bottom: 1px solid var(--color-orange);
     position: sticky;
@@ -20,6 +19,7 @@
     text-decoration: none;
     color: var(--color-orange)
 }
+
 .header a:hover {
     color: white;
 }
