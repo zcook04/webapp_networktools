@@ -1,0 +1,6 @@
+.mydevices-cards-wrapper {
+    display: flex;
+    max-width: 1100;
+    justify-content: flex-start;
+    gap: 2rem;
+}

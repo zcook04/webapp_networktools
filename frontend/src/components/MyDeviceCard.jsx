@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getDevices } from '../actions/deviceActions'
 
+import '../css/mydevicecard.css'
+
 function MyDeviceCard(props) {
     return (
         <div className="mydevicecard-card-wrapper">

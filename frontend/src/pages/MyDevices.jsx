@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom'
 import { getDevices } from '../actions/deviceActions';
 import MyDeviceCard from '../components/MyDeviceCard'
 
+import '../css/mydevices.css'
+
 //Needs to be a protected page.
 
 function MyDevices(props) {
     const { getDevices } = props
-
     useEffect(() => {
         const getData = async () => {
             getDevices()
@@ -18,20 +19,24 @@ function MyDevices(props) {
     }, [getDevices]);
 
     const mydevices = props.devices.DeviceList
-    if (props.auth.isAuthenticated) {
+    if (localStorage.token) {
         return (
             <div className="page-wrapper">
-                {mydevices && mydevices.map(device => {
-                    return (
-                        <MyDeviceCard
-                            key={device.ipv4}
-                            ipv4={device.ipv4}
-                            deviceType={device.deviceType}
-                            hasConfig={device.runningConfig}
-                            lastUpdate={device.lastUpdate}
-                        />
-                    )
-                })}
+                <div className="mydevices-cards-wrapper">
+                    {mydevices && mydevices.map(device => {
+                        return (
+
+                            <MyDeviceCard
+                                key={device.ipv4}
+                                ipv4={device.ipv4}
+                                deviceType={device.deviceType}
+                                hasConfig={device.runningConfig}
+                                lastUpdate={device.lastUpdate}
+                            />
+
+                        )
+                    })}
+                </div>
             </div>
         )
     } else {
