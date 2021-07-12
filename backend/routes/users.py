@@ -47,6 +47,6 @@ class LoginUser(Resource):
         user = User.query.filter_by(email=args['email']).first()
 
         if bcrypt.checkpw(args['password'].encode('utf8'), user.password):
-            return {"token": create_access_token(identity=args['email']), "username": user.username}, 200
+            return {"result": "Success", "token": create_access_token(identity=args['email'])}, 200
         else:
-            return {'msg': 'Invalid Credentials'}, 401
+            return {"result": "Fail", "token": None, 'msg': 'Invalid Credentials'}, 401

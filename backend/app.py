@@ -37,7 +37,7 @@ with app.app_context():
 
 # TOOL ROUTES
 api.add_resource(RunningConfiguration,
-                 '/api/v1/running-config')
+                 '/api/v1/tools/get-running-config')
 
 # DEVICE ROUTES
 api.add_resource(MyDevices, '/api/v1/<string:user>/mydevices')
