@@ -22,4 +22,3 @@ class RunningConfiguration(Resource):
             return {"Error": f'Authentication Failed: \n{error}'}, 403
         else:
             return conf, 200
-        return 'Failure', 501
