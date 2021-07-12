@@ -1,14 +1,14 @@
-import {GET_DEVICES} from '../actions/actions'
+import { GET_DEVICES } from '../actions/actions'
 
 const initialState = {
     'Loading': false,
-    'Devices': {}
+    'DeviceList': []
 }
 
 const deviceReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_DEVICES:
-            return {...state, 'devices': action.payload}
+            return { ...state, 'DeviceList': action.payload }
         default:
             return state;
     }
