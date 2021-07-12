@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
-import { getDevices } from '../actions/deviceActions'
+import { getDevices } from '../../actions/deviceActions'
 
-import '../css/mydevicecard.css'
+import '../../css/mydevicecard.css'
 
 function MyDeviceCard(props) {
     const uri = `/mydevices/${props.auth.user}/${props.ipv4}`

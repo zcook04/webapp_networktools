@@ -1,6 +1,6 @@
 // MAIN PAGES
 import Home from "./pages/Home"
-import MyDevices from './pages/MyDevices'
+import MyDevices from './pages/mydevices/MyDevices'
 import Tools from "./pages/tools/Tools"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
@@ -15,8 +15,8 @@ import Configure from "./pages/configure/Configure"
 
 
 // COMPONENTS
-import Header from "./components/header"
-import Footer from "./components/footer"
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 // MODULES
 import {

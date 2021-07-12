@@ -2,10 +2,10 @@ import { React, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getDevices } from '../actions/deviceActions';
-import MyDeviceCard from '../components/MyDeviceCard'
+import { getDevices } from '../../actions/deviceActions'
+import MyDeviceCard from './MyDeviceCard'
 
-import '../css/mydevices.css'
+import '../../css/mydevices.css'
 
 //Needs to be a protected page.
 
