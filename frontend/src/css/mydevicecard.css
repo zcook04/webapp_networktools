@@ -20,3 +20,7 @@
 .mydevicecard-card-wrapper:hover {
     cursor: pointer;
 }
+
+.mydevicecard-card-wrapper p {
+    color: white;
+}
