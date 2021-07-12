@@ -15,7 +15,7 @@ import {
   const initialState = {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
-    loading: true,
+    loading: false,
     user: null,
     error: null,
   };
@@ -33,11 +33,11 @@ const authReducer = (state = initialState, action) => {
           loading: false,
         };
       case USER_LOADED:
+        localStorage.setItem('token', action.payload.token)
         return {
           ...state,
-          isAuthenticated: true,
           loading: false,
-          user: action.payload,
+          ...action.payload,
         };
       case REGISTER_SUCCESS:
         localStorage.setItem('token', action.payload.token);
@@ -51,11 +51,20 @@ const authReducer = (state = initialState, action) => {
         localStorage.setItem('token', action.payload.token);
         return {
           ...state,
-          ...action.payload,
-          isAuthenticated: true,
+          user: action.payload.username,
+          email: action.payload.email,
+          token: action.payload.token,
+          isAuthenticated: action.payload.isAuthenticated,
           loading: false,
         };
       case AUTH_ERROR:
+        return {
+          ...state,
+          token: null,
+          isAuthenticated: false,
+          loading: false,
+          user: null
+        }
       case REGISTER_FAIL:
         localStorage.removeItem('token');
         return {

@@ -1,8 +1,19 @@
 import React from 'react'
 import '../css/header.css'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { logout } from '../actions/authActions'
 
-function header() {
+function Header(props) {
+    const { isAuthenticated } = props.auth
+    const { logout } = props
+    const histroy = useHistory()
+
+    const logoutHandler = () => {
+        logout()
+        histroy.push('/logout')
+    }
+
     return (
         <header className="header">
             <div className="header-wrapper">
@@ -20,7 +31,9 @@ function header() {
                         <li>
                             <Link to="/tools">TOOLS</Link>
                         </li>
-                        <li><Link to="/login">LOGIN</Link></li>
+                        <li>
+                            {isAuthenticated ? <Link onClick={logoutHandler}>LOGOUT</Link> : <Link to="/login">LOGIN</Link>}
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -28,4 +41,12 @@ function header() {
     )
 }
 
-export default (header)
+const mapDispatchToProps = {
+    logout
+}
+
+const mapStateToProps = (state) => ({
+    auth: state.authState
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)
