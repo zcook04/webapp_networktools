@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -8,6 +9,7 @@ function Login(props) {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
 
+    const history = useHistory()
     const {loadUser} = props
 
     const submitHandler = async (e) => {
@@ -16,6 +18,7 @@ function Login(props) {
             const result = await axios.post('/api/v1/user/login', {"email": email, "password": password})
             if (result.data.isAuthenticated) {
                 loadUser(result)
+                history.push('/')
             } else {
                 console.log('Unauthorized')
             }
