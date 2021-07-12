@@ -1,5 +1,4 @@
 from flask_restful import Resource, reqparse
-import sqlalchemy
 
 from Models import mongo_client
 
