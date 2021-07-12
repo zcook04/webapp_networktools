@@ -6,7 +6,7 @@ import { getDevices } from '../../actions/deviceActions'
 import '../../css/mydevicecard.css'
 
 function MyDeviceCard(props) {
-    const uri = `/mydevices/${props.auth.user}/${props.ipv4}`
+    const uri = `/mydevices/${props.ipv4}`
     return (
         <Link to={uri} >
             <div className="mydevicecard-card-wrapper">

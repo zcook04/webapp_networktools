@@ -1,18 +1,20 @@
 // MAIN PAGES
 import Home from "./pages/Home"
-import MyDevices from './pages/mydevices/MyDevices'
-import Tools from "./pages/tools/Tools"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
 import Register from "./pages/Register"
 
 //TOOLS
+import Tools from "./pages/tools/Tools"
 import IosTools from "./pages/tools/ios/IosTools"
 import RunningConfig from "./pages/tools/ios/RunningConfig";
 
 //CONFIGURE
 import Configure from "./pages/configure/Configure"
 
+//MYDEVICES
+import DeviceInfo from "./pages/mydevices/DeviceInfo"
+import MyDevices from './pages/mydevices/MyDevices'
 
 // COMPONENTS
 import Header from "./components/Header"
@@ -34,12 +36,14 @@ function App() {
           <Route path="/tools/ios/running-config" component={RunningConfig} />
           <Route exact path="/tools/ios" component={IosTools} />
           <Route exact path="/tools" component={Tools} />
-          <Route path="/mydevices" component={MyDevices} />
+          <Route exact path="/mydevices" component={MyDevices} />
+          <Route path="/mydevices/:deviceid" component={DeviceInfo} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
           <Route path="/register" component={Register} />
           <Route exact path="/" component={Home} />
           <Route exact path="/configure" component={Configure} />
+
         </Switch>
       <Footer />
       </Router>
