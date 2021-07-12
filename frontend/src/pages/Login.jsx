@@ -8,6 +8,7 @@ import {loadUser} from '../actions/authActions'
 function Login(props) {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
+    const [authFailed, setAuthFailed] = useState(false)
 
     const history = useHistory()
     const {loadUser} = props
@@ -17,13 +18,20 @@ function Login(props) {
         try {
             const result = await axios.post('/api/v1/user/login', {"email": email, "password": password})
             if (result.data.isAuthenticated) {
+                console.log('was authed')
                 loadUser(result)
                 history.push('/')
             } else {
-                console.log('Unauthorized')
+                setAuthFailed(true)
+                setEmail('')
+                setPassword('')
+                setTimeout(() => setAuthFailed(false), 3000)
             }
         } catch (err){
-            console.log(err)
+            setAuthFailed(true)
+            setEmail('')
+            setPassword('')
+            setTimeout(() => setAuthFailed(false), 3000)
         }
     }
 
@@ -49,8 +57,8 @@ function Login(props) {
                 <label htmlFor="password"></label>
                 <input type="password" name="password" value={password} onChange={changeHandler}/>
                 <input type="submit" onClick={submitHandler}/>
-
             </form>
+            { authFailed && <h4>Authorization Failed.</h4> }
         </div>
     )
 }

@@ -9,6 +9,9 @@ import Logout from "./pages/Logout"
 import IosTools from "./pages/tools/ios/IosTools"
 import RunningConfig from "./pages/tools/ios/RunningConfig";
 
+//CONFIGURE
+import Configure from "./pages/configure/Configure"
+
 
 // COMPONENTS
 import Header from "./components/header"
@@ -34,6 +37,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
           <Route exact path="/" component={Home} />
+          <Route exact path="/configure" component={Configure} />
         </Switch>
       <Footer />
       </Router>
