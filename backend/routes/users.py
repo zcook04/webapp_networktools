@@ -33,9 +33,23 @@ class RegisterUser(Resource):
         try:
             db.session.add(new_user)
             db.session.commit()
-            return 201
+            return {"isAuthenticated": True, "token": create_access_token(identity=args['email']), "user": args['username'], "email": args['email']}, 201
         except sqlalchemy.exc.IntegrityError:
             return {'error': 'User alreasdy exists'}, 501
+
+    @jwt_required()
+    def delete(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('email', type=str, required=True)
+        args = parser.parse_args()
+        email = args['email']
+        user = User.query.filter_by(email=email).first()
+        try:
+            db.session.delete(user)
+            db.session.commit()
+            return {"msg": "success"}
+        except sqlalchemy.orm.exc.UnmappedInstanceError:
+            return {"msg": "User Does Not Exist"}
 
 
 class LoginUser(Resource):
@@ -44,9 +58,13 @@ class LoginUser(Resource):
         parser.add_argument('email', type=str, required=True)
         parser.add_argument('password', type=str, required=True)
         args = parser.parse_args()
+
+        if not args['email'] or not args['password']:
+            return {"isAuthenticated": False, "token": None, 'msg': 'Email and Password are required'}
+
         user = User.query.filter_by(email=args['email']).first()
 
-        if bcrypt.checkpw(args['password'].encode('utf8'), user.password):
-            return {"result": "Success", "token": create_access_token(identity=args['email'])}, 200
+        if user and bcrypt.checkpw(args['password'].encode('utf8'), user.password):
+            return {"isAuthenticated": True, "token": create_access_token(identity=args['email']), "user": user.username, "email": user.email}, 200
         else:
-            return {"result": "Fail", "token": None, 'msg': 'Invalid Credentials'}, 401
+            return {"isAuthenticated": False, "token": None, 'msg': 'Invalid Credentials'}
