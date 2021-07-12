@@ -52,7 +52,7 @@ function Login(props) {
 
 
     return (
-        <div className="page-wrapper login-page">
+        <div className="page-wrapper">
             <form className="login-form-wrapper" action="/api/v1/user/login">
                 {!authFailed ? <h2>LOGIN</h2> : <h2>AUTH FAILED</h2>}
                 <input placeholder="Email" className="login-email-pass" type="text" name="email" value={email} onChange={changeHandler}/>

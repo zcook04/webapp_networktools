@@ -10,13 +10,6 @@
     border: 0;
 }
 
-.login-page {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-bottom: 25%;
-}
-
 .login-input-wrapper {
     width: 80%;
     padding: .5rem;

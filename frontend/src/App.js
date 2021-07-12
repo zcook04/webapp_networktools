@@ -4,6 +4,7 @@ import MyDevices from './pages/MyDevices'
 import Tools from "./pages/tools/Tools"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
+import Register from "./pages/Register"
 
 //TOOLS
 import IosTools from "./pages/tools/ios/IosTools"
@@ -36,6 +37,7 @@ function App() {
           <Route path="/mydevices" component={MyDevices} />
           <Route path="/login" component={Login} />
           <Route path="/logout" component={Logout} />
+          <Route path="/register" component={Register} />
           <Route exact path="/" component={Home} />
           <Route exact path="/configure" component={Configure} />
         </Switch>
