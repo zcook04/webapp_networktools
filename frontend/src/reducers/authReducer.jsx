@@ -15,7 +15,7 @@ import {
     token: localStorage.getItem('token'),
     isAuthenticated: null,
     loading: false,
-    user: null,
+    username: null,
     error: null,
   };
   
@@ -50,7 +50,7 @@ const authReducer = (state = initialState, action) => {
         localStorage.setItem('token', action.payload.token);
         return {
           ...state,
-          user: action.payload.username,
+          username: action.payload.username,
           email: action.payload.email,
           token: action.payload.token,
           isAuthenticated: action.payload.isAuthenticated,
@@ -62,7 +62,7 @@ const authReducer = (state = initialState, action) => {
           token: null,
           isAuthenticated: false,
           loading: false,
-          user: null
+          username: null
         }
       case REGISTER_FAIL:
         localStorage.removeItem('token');
@@ -71,7 +71,7 @@ const authReducer = (state = initialState, action) => {
           token: null,
           isAuthenticated: false,
           loading: false,
-          user: null,
+          username: null,
           error: action.payload,
         };
       case LOGIN_FAIL:
@@ -81,7 +81,7 @@ const authReducer = (state = initialState, action) => {
           token: null,
           isAuthenticated: false,
           loading: false,
-          user: null,
+          username: null,
           error: action.payload,
         };
       case LOGOUT:
@@ -91,7 +91,7 @@ const authReducer = (state = initialState, action) => {
           token: null,
           isAuthenticated: false,
           loading: false,
-          user: null,
+          username: null,
         };
       case CLEAR_ERRORS:
         return {

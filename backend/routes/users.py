@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
-from Models import User, db
 import sqlalchemy
+
+from Models import mongo_client
 
 # JWT Token Import
 from flask_jwt_extended import create_access_token
@@ -21,14 +22,15 @@ class RegisterUser(Resource):
         parser.add_argument('email', type=str, required=True)
         parser.add_argument('password', type=str, required=True)
         args = parser.parse_args()
-        new_user = User(
-            username=args['username'], email=args['email'], password=bcrypt.hashpw(args['password'].encode('utf8'), SALT))
-        try:
-            db.session.add(new_user)
-            db.session.commit()
+        hashedpw = bcrypt.hashpw(args['password'].encode('utf8'), SALT)
+        args['password'] = hashedpw
+        if mongo_client.db.users.find_one({"email": args['email']}):
+            return {"result": "fail", "msg": "Email exists and must be unique"}, 409
+        mongo_client.db.users.insert_one(args)
+        if(args):
             return {"isAuthenticated": True, "token": create_access_token(identity=args['email']), "user": args['username'], "email": args['email']}, 201
-        except sqlalchemy.exc.IntegrityError:
-            return {'error': 'User alreasdy exists'}, 501
+        else:
+            return 500
 
     @jwt_required()
     def delete(self):
@@ -41,14 +43,7 @@ class RegisterUser(Resource):
         # Verify User is Deleted Itself
         if jwtemail != email:
             return {"msg": "Not Authorized"}, 401
-
-        user = User.query.filter_by(email=email).first()
-        try:
-            db.session.delete(user)
-            db.session.commit()
-            return {"msg": "success"}, 202
-        except sqlalchemy.orm.exc.UnmappedInstanceError:
-            return {"msg": "User Does Not Exist"}, 404
+        return {"msg": "success"}, 202
 
 
 class LoginUser(Resource):
@@ -58,13 +53,20 @@ class LoginUser(Resource):
         parser.add_argument('password', type=str, required=True)
         args = parser.parse_args()
 
+        # Validate Input
         if not args['email'] or not args['password']:
             return {"isAuthenticated": False, "token": None, 'msg': 'Email and Password are required'}
 
-        user = User.query.filter_by(email=args['email']).first()
+        # Pull variables out of user object or return 404.
+        user = mongo_client.db.users.find_one_or_404({"email": args['email']})
+        username = user['username']
+        email = user['email']
+        _id = str(user['_id'])
+        token = create_access_token(identity=email)
 
-        if user and bcrypt.checkpw(args['password'].encode('utf8'), user.password):
-            return {"isAuthenticated": True, "token": create_access_token(identity=args['email']), "user": user.username, "email": user.email}, 200
+        # Validate PW And Return Token
+        if bcrypt.checkpw(args['password'].encode('utf8'), user['password']):
+            return {"isAuthenticated": True, "token": token, "username": username, "email": email, "id": _id}, 200
         else:
             return {"isAuthenticated": False, "token": None, 'msg': 'Invalid Credentials'}
 
@@ -72,4 +74,4 @@ class LoginUser(Resource):
 # FOR TESTING DATABASE ONLY------------------------------------------------------------------------
 class AllUsers(Resource):
     def get(self):
-        return{u.id: u.email for u in db.session.query(User).all()}
+        return

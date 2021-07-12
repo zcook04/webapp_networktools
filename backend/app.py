@@ -2,7 +2,7 @@ from routes.users import RegisterUser, LoginUser, AllUsers
 from routes.devices import MyDevices, DeviceInfo
 from routes.tools import RunningConfiguration
 
-from Models import db
+from flask_pymongo import PyMongo
 
 from flask import Flask
 from flask_restful import Api
@@ -10,11 +10,17 @@ from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 
+from Models import mongo_client
+
 import os
 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-load_dotenv(BASE_DIR, '.env')
+
+load_dotenv('.env')
+
+MONGO_URI = os.getenv('MONGO_URI')
+JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
 
 # INIT APP
 app = Flask(__name__, static_folder='../frontend/build/static',
@@ -22,18 +28,13 @@ app = Flask(__name__, static_folder='../frontend/build/static',
 api = Api(app)
 
 # JWT CONFIG
-app.config['JWT_SECRET_KEY'] = os.environ.get('JWT_SECRET_KEY')
+app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
 jwt = JWTManager(app)
 
-# DB CONFIG
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path.join(BASE_DIR, 'db.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 # INIT DB
-db.init_app(app)
-with app.app_context():
-    db.create_all()
+app.config['MONGO_URI'] = MONGO_URI
+mongo_client.init_app(app)
+
 
 # TOOL ROUTES
 api.add_resource(RunningConfiguration,

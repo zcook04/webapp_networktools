@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { logout } from '../actions/authActions'
 
 function Header(props) {
-    const { isAuthenticated, user } = props.auth
+    const { isAuthenticated, username } = props.auth
     const { logout } = props
     const history = useHistory()
 
@@ -18,7 +18,7 @@ function Header(props) {
         <header className="header">
             <div className="header-wrapper">
                 <div className="header-logo">
-                    {isAuthenticated ? <Link to="/">{user.toUpperCase()}</Link> : <Link to="/">GUEST</Link>}
+                    {isAuthenticated ? <Link to="/">{username && username.toUpperCase()}</Link> : <Link to="/">GUEST</Link>}
                 </div>
                 <nav className="header-nav">
                     <ul>
