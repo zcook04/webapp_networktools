@@ -1,6 +1,7 @@
-from flask import jsonify
+from flask import jsonify, sessions
 from flask_restful import Resource, reqparse
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 from Models import User, db
 
@@ -68,3 +69,9 @@ class LoginUser(Resource):
             return {"isAuthenticated": True, "token": create_access_token(identity=args['email']), "user": user.username, "email": user.email}, 200
         else:
             return {"isAuthenticated": False, "token": None, 'msg': 'Invalid Credentials'}
+
+
+# FOR TESTING DATABASE ONLY------------------------------------------------------------------------
+class AllUsers(Resource):
+    def get(self):
+        return{u.id: u.email for u in db.session.query(User).all()}

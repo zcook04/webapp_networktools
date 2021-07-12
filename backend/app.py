@@ -1,4 +1,4 @@
-from routes.users import RegisterUser, LoginUser
+from routes.users import RegisterUser, LoginUser, AllUsers
 from routes.devices import MyDevices
 from routes.tools import RunningConfiguration
 
@@ -45,6 +45,7 @@ api.add_resource(MyDevices, '/api/v1/<string:user>/mydevices')
 # USER ROUTES
 api.add_resource(RegisterUser, '/api/v1/user/register')
 api.add_resource(LoginUser, '/api/v1/user/login')
+api.add_resource(AllUsers, '/api/v1/users')
 
 # Uncomment for production.
 # @app.route("/")
