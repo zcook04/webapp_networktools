@@ -1,5 +1,5 @@
 from routes.users import RegisterUser, LoginUser, AllUsers
-from routes.devices import MyDevices
+from routes.devices import MyDevices, DeviceInfo
 from routes.tools import RunningConfiguration
 
 from Models import db
@@ -41,6 +41,7 @@ api.add_resource(RunningConfiguration,
 
 # DEVICE ROUTES
 api.add_resource(MyDevices, '/api/v1/mydevices')
+api.add_resource(DeviceInfo, '/api/v1/mydevices/device')
 
 # USER ROUTES
 api.add_resource(RegisterUser, '/api/v1/user/register')
