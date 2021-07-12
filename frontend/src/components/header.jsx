@@ -7,11 +7,11 @@ import { logout } from '../actions/authActions'
 function Header(props) {
     const { isAuthenticated } = props.auth
     const { logout } = props
-    const histroy = useHistory()
+    const history = useHistory()
 
     const logoutHandler = () => {
         logout()
-        histroy.push('/logout')
+        history.push('/logout')
     }
 
     return (
