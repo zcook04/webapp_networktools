@@ -1,10 +1,5 @@
-from flask import jsonify, sessions
 from flask_restful import Resource, reqparse
-from flask_sqlalchemy import SQLAlchemy
-import json
-
 from Models import User, db
-
 import sqlalchemy
 
 # JWT Token Import
@@ -27,10 +22,8 @@ class RegisterUser(Resource):
         parser.add_argument('email', type=str, required=True)
         parser.add_argument('password', type=str, required=True)
         args = parser.parse_args()
-
         new_user = User(
             username=args['username'], email=args['email'], password=bcrypt.hashpw(args['password'].encode('utf8'), SALT))
-
         try:
             db.session.add(new_user)
             db.session.commit()
@@ -44,13 +37,19 @@ class RegisterUser(Resource):
         parser.add_argument('email', type=str, required=True)
         args = parser.parse_args()
         email = args['email']
+        jwtemail = get_jwt_identity()
+
+        # Verify User is Deleted Itself
+        if jwtemail != email:
+            return {"msg": "Not Authorized"}, 401
+
         user = User.query.filter_by(email=email).first()
         try:
             db.session.delete(user)
             db.session.commit()
-            return {"msg": "success"}
+            return {"msg": "success"}, 202
         except sqlalchemy.orm.exc.UnmappedInstanceError:
-            return {"msg": "User Does Not Exist"}
+            return {"msg": "User Does Not Exist"}, 404
 
 
 class LoginUser(Resource):

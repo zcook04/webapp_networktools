@@ -1,6 +1,4 @@
-from flask_restful import Resource, reqparse
 from flask_sqlalchemy import SQLAlchemy
-import json
 
 db = SQLAlchemy()
 
@@ -15,7 +13,6 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.password = password
-        self.id = id
 
     def __repr__(self):
         return f'{str(self.id)}: {self.email}'
