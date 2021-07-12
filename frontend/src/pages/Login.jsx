@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
 import {loadUser} from '../actions/authActions'
+
+import '../css/login.css'
 
 function Login(props) {
     const [password, setPassword] = useState('')
@@ -50,15 +52,14 @@ function Login(props) {
 
 
     return (
-        <div className="page-wrapper">
-            <form action="/api/v1/user/login">
-                <label htmlFor="email">Email</label>
-                <input type="text" name="email" value={email} onChange={changeHandler}/>
-                <label htmlFor="password"></label>
-                <input type="password" name="password" value={password} onChange={changeHandler}/>
-                <input type="submit" onClick={submitHandler}/>
+        <div className="page-wrapper login-page">
+            <form className="login-form-wrapper" action="/api/v1/user/login">
+                {!authFailed ? <h2>LOGIN</h2> : <h2>AUTH FAILED</h2>}
+                <input placeholder="Email" className="login-email-pass" type="text" name="email" value={email} onChange={changeHandler}/>
+                <input placeholder="Password" className="login-email-pass" type="password" name="password" value={password} onChange={changeHandler}/>
+                <input className="login-submit-btn" type="submit" onClick={submitHandler} value="Login"/>
+                <p>Don't have an account? <Link to="/register">Register Now</Link></p>
             </form>
-            { authFailed && <h4>Authorization Failed.</h4> }
         </div>
     )
 }
