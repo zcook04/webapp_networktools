@@ -63,34 +63,34 @@ const handleTab = (e) => {
 
     return (
         <div className="page-wrapper">
-            <h1>My Device: {props.devices.ActiveDevice.name ? props.devices.ActiveDevice.name : "Unnamed Device"}</h1>
+            <h1>My Device: {props.devices.activeDevice.name ? props.devices.activeDevice.name : "Unnamed Device"}</h1>
             <div className="device-info-kv">
                 <div className="device-info-key">Serial Number</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.sn && props.devices.ActiveDevice.sn}</div>
+                <div className="device-info-value">{props.devices.activeDevice.sn && props.devices.activeDevice.sn}</div>
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Software Version</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.osSoftware && props.devices.ActiveDevice.osSoftware}</div>
+                <div className="device-info-value">{props.devices.activeDevice.osSoftware && props.devices.activeDevice.osSoftware}</div>
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Device Type</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.deviceType && props.devices.ActiveDevice.deviceType}</div>
+                <div className="device-info-value">{props.devices.activeDevice.deviceType && props.devices.activeDevice.deviceType}</div>
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Hostname</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.sn && props.devices.ActiveDevice.hostname}</div>
+                <div className="device-info-value">{props.devices.activeDevice.sn && props.devices.activeDevice.hostname}</div>
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Management Address</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.ipv4 && props.devices.ActiveDevice.ipv4}</div>
+                <div className="device-info-value">{props.devices.activeDevice.ipv4 && props.devices.activeDevice.ipv4}</div>
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Username</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.username && props.devices.ActiveDevice.username}</div>
+                <div className="device-info-value">{props.devices.activeDevice.username && props.devices.activeDevice.username}</div>
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Password</div>
-                <div className="device-info-value">{props.devices.ActiveDevice.password && props.devices.ActiveDevice.password}</div>
+                <div className="device-info-value">{props.devices.activeDevice.password && props.devices.activeDevice.password}</div>
             </div>
             <div className="device-info-config-tab-wrapper">
                 <div className="device-info-config-tab" onClick={handleTab} id='t-running-cfg'>Running Config</div>
