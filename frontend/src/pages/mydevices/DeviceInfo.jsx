@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getDeviceInfo, getRunningConfig} from '../../actions/deviceActions';
 import { connect } from 'react-redux'
 
-import '../../css/deviceinfo.css'
+import '../../css/mydeviceinfo.css'
 
 function DeviceInfo(props) {
     const { deviceid } = useParams()
