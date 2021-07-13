@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { GET_DEVICES } from "./actions";
+import { GET_DEVICES, SET_ACTIVE_DEVICE } from "./actions";
 
 
 
@@ -19,8 +19,8 @@ export const getDevices = () => async (dispatch) => {
     }
 }
 
-// RETURNS A SINGLE DEVICE AS AN OBJECT
-export const getDeviceInfo = (device) => async (dispatch) => {
+// LOADS SINGLE DEVICE INTO STATE AS ACTIVE DEVICE
+export const setActiveDevice = (device) => async (dispatch) => {
     const uri = `/api/v1/mydevices/device/${device}`
     const config = {
         headers: {
@@ -31,6 +31,7 @@ export const getDeviceInfo = (device) => async (dispatch) => {
     const deviceInfo = await axios(uri, config)
 
     if(deviceInfo){
+        dispatch({type: SET_ACTIVE_DEVICE, payload: deviceInfo.data})
         return deviceInfo.data
     }
 }
