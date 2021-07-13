@@ -341,3 +341,5 @@ sketch
 db.*
 db.sqlite
 *.sqlite
+
+imgs/
