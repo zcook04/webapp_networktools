@@ -28,7 +28,7 @@ class RegisterUser(Resource):
         mongo_client.db.users.insert_one(args)
         if(args):
             token = "Bearer " + create_access_token(identity=args['email'])
-            return {"isAuthenticated": True, "token": token, "user": args['username'], "email": args['email'], "id": str(args['_id'])}, 201
+            return {"isAuthenticated": True, "username": args['username'], "token": token, "user": args['username'], "email": args['email'], "id": str(args['_id'])}, 201
         else:
             return 500
 
@@ -66,15 +66,16 @@ class LoginUser(Resource):
             return {"isAuthenticated": False, "token": None, 'msg': 'Email and Password are required'}
 
         # Pull variables out of user object or return 404.
-        user = mongo_client.db.users.find_one_or_404({"email": args['email']})
-        username = user['username']
-        email = user['email']
-        _id = str(user['_id'])
-        token = "Bearer " + create_access_token(identity=email)
+        dbuserObj = mongo_client.db.users.find_one_or_404(
+            {"email": args['email']})
+        dbusername = dbuserObj['username']
+        dbemail = dbuserObj['email']
+        db_id = str(dbuserObj['_id'])
+        token = "Bearer " + create_access_token(identity=dbemail)
 
         # Validate PW And Return Token
-        if bcrypt.checkpw(args['password'].encode('utf8'), user['password']):
-            return {"isAuthenticated": True, "token": token, "username": username, "email": email, "id": _id}, 200
+        if bcrypt.checkpw(args['password'].encode('utf8'), dbuserObj['password']):
+            return {"isAuthenticated": True, "token": token, "username": dbusername, "email": dbemail, "id": db_id}, 200
         else:
             return {"isAuthenticated": False, "token": None, 'msg': 'Invalid Credentials'}
 

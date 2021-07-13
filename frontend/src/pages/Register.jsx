@@ -17,10 +17,6 @@ function Register(props) {
     const submitHandler = async (e) => {
         e.preventDefault()
             await register({'username': username, 'password': password, 'email': email})
-            if (props.auth.isAuthenticated){
-                setRegistered(true)
-                setTimeout(()=> {history.push('/')}, 2000)
-            }
     }
 
     const changeHandler = (e) => {
@@ -53,6 +49,14 @@ function Register(props) {
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.auth.error])
+
+    useEffect(() => {
+        if (props.auth.isAuthenticated){
+            setRegistered(true)
+            setTimeout(()=> {history.push('/')}, 2000)
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.auth.isAuthenticated])
 
     const setErrorMessage =(msg) => {
         setError(msg)
