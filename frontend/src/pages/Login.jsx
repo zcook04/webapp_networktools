@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -9,7 +9,6 @@ import '../css/login.css'
 function Login(props) {
     const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [authFailed, setAuthFailed] = useState(false)
 
     const history = useHistory()
     const { login } = props
@@ -17,22 +16,22 @@ function Login(props) {
     const submitHandler = async (e) => {
         e.preventDefault()
         try {
-            const result = login({ "email": email, "password": password })
-            if (result.data.isAuthenticated) {
-                history.push('/')
-            } else {
-                setAuthFailed(true)
-                setEmail('')
-                setPassword('')
-                setTimeout(() => setAuthFailed(false), 3000)
-            }
+            login({ "email": email, "password": password })
         } catch (err) {
-            setAuthFailed(true)
             setEmail('')
             setPassword('')
-            setTimeout(() => setAuthFailed(false), 3000)
         }
     }
+
+    useEffect(() => {
+        if (props.auth.isAuthenticated) {
+            history.push('/')
+        } else {
+            setEmail('')
+            setPassword('')
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.auth.isAuthenticated])
 
     const changeHandler = (e) => {
         switch (e.target.name) {
@@ -51,7 +50,7 @@ function Login(props) {
     return (
         <div className="page-wrapper">
             <form className="login-form-wrapper" action="/api/v1/user/login">
-                {!authFailed ? <h2>LOGIN</h2> : <h2>AUTH FAILED</h2>}
+                {!props.auth.loading ? <h2>LOGIN</h2> : <h2>Logging In...</h2>}
                 <input placeholder="Email" className="login-email-pass" type="text" name="email" value={email} onChange={changeHandler} />
                 <input placeholder="Password" className="login-email-pass" type="password" name="password" value={password} onChange={changeHandler} />
                 <input className="login-submit-btn" type="submit" onClick={submitHandler} value="Login" />

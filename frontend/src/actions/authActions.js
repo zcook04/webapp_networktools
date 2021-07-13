@@ -70,6 +70,7 @@ import {
   };
   
   export const login = (formData) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
     const config = {
       headers: {
         'Content-Type': 'application/json',
