@@ -19,15 +19,12 @@ class DeviceInfo(Resource):
     # ROUTE  /API/V1/MYDEVICES/DEVICE
     # DESC   GET ALL AVAILABLE INFORMATION ON A GIVEN DEVICE ID
     @jwt_required()
-    def get(self):
-        device_parser = reqparse.RequestParser()
-        device_parser.add_argument('ipv4', type=str, required=True)
-        ipv4 = device_parser.parse_args()['ipv4']
-        return mongo_client.db.devices.find_one_or_404({'owner': get_jwt_identity(), 'ipv4': ipv4}, {'_id': False}), 200
+    def get(self, device):
+        return mongo_client.db.devices.find_one_or_404({'owner': get_jwt_identity(), 'ipv4': device}, {'_id': False}), 200
 
     # DESC   ADD A DEVICE AND ASSOCIATE IT WITH ID FOUND IN JWT_TOKEN
     @jwt_required()
-    def post(self):
+    def post(self, device):
         device_parser = reqparse.RequestParser()
         device_parser.add_argument('ipv4', type=str, required=True)
         device_parser.add_argument('password', type=str, required=True)
@@ -40,7 +37,7 @@ class DeviceInfo(Resource):
 
     # DESC   VALIDATE JWT_ASSOCIATION AND UPDATE DEVICE VALUES
     @jwt_required()
-    def put(self):
+    def put(self, device):
         print(request.get_json())
         device_parser = reqparse.RequestParser()
         device_parser.add_argument('ipv4', type=str, required=True)
@@ -51,7 +48,7 @@ class DeviceInfo(Resource):
 
     # DESC   VALIDATIE JWT_ASSOCIATION AND REMOVE DEVICE FROM ASSOCIATED USER
     @jwt_required()
-    def delete(self):
+    def delete(self, device):
         device_parser = reqparse.RequestParser()
         device_parser.add_argument('ipv4', type=str, required=True)
         ipv4 = device_parser.parse_args()['ipv4']

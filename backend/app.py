@@ -42,7 +42,7 @@ api.add_resource(RunningConfiguration,
 
 # DEVICE ROUTES
 api.add_resource(MyDevices, '/api/v1/mydevices')
-api.add_resource(DeviceInfo, '/api/v1/mydevices/device')
+api.add_resource(DeviceInfo, '/api/v1/mydevices/device/<string:device>')
 
 # USER ROUTES
 api.add_resource(RegisterUser, '/api/v1/user/register')

@@ -2,7 +2,8 @@ import { GET_DEVICES } from '../actions/actions'
 
 const initialState = {
     'Loading': false,
-    'DeviceList': []
+    'DeviceList': [],
+    'ActiveDevice': {}
 }
 
 const deviceReducer = (state = initialState, action) => {
