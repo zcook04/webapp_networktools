@@ -7,7 +7,7 @@ import { GET_DEVICES } from "./actions";
 export const getDevices = () => async (dispatch) => {
     const config = {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': localStorage.getItem('token')
         }
     }
     const deviceList = await axios('/api/v1/mydevices', config)
@@ -24,7 +24,7 @@ export const getDeviceInfo = (device) => async (dispatch) => {
     const uri = `/api/v1/mydevices/device/${device}`
     const config = {
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': localStorage.getItem('token')
         }
     }
 

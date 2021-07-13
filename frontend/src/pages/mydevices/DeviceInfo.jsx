@@ -14,9 +14,9 @@ function DeviceInfo(props) {
         const getData = async () => {
             const data = await getDeviceInfo(deviceid)
             setDevice(data)
-            const result = data.runningConfig.split('\\n')
-            setRunningConfig(result)
-        }
+            if(data.runningConfig){
+            setRunningConfig(data.runningConfig.split('\\n'))
+        }}
         getData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
