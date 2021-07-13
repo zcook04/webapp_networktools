@@ -3,6 +3,9 @@ import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
 import { getDevices } from '../../actions/deviceActions'
 
+import iosImage from '../../imgs/icons/ios-device.png'
+import asaImage from '../../imgs/icons/asa-device.png'
+
 import '../../css/mydevicecard.css'
 
 function MyDeviceCard(props) {
@@ -11,9 +14,14 @@ function MyDeviceCard(props) {
         <Link to={uri} >
             <div className="mydevicecard-card-wrapper">
                 <p>{props.ipv4}</p>
-                <p>{props.deviceType === "cisco_ios" && "Cisco IOS Device"}</p>
-                <p>{props.hasConfig ? "Config Loaded" : "Intial Config Required"}</p>
+                <div className="mydevicecard-img">
+                    {props.deviceType === "cisco_ios" &&
+                        <img src={iosImage} alt="ios-img" />}
+                    {props.deviceType === "cisco_asa" &&
+                        <img src={asaImage} alt="asa-img" />}
             </div>
+            </div>
+
         </Link>
     )
 }
