@@ -61,13 +61,13 @@ import {
       },
     };
     try {
-      const res = await axios.post('api/v1/users/register', formData, config);
+      const res = await axios.post('api/v1/user/register', formData, config);
       dispatch({
         type: REGISTER_SUCCESS,
         payload: res.data,
       });
-  
       loadUser();
+      return res
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
