@@ -1,0 +1,51 @@
+.device-info-kv {
+    display: flex;
+    width: 100%;
+    margin: .75rem 0;
+}
+
+.device-info-kv:hover {
+    color: var(--color-orange);
+    cursor: pointer;
+}
+
+.device-info-key {
+    flex: 1;
+}
+
+.device-info-value {
+    flex: 3;
+}
+
+.device-info-config-tab-wrapper {
+    height: 30px;
+    display: flex;
+    justify-content: flex-start;
+    gap: .2rem;
+    margin-top: 2rem;
+}
+
+.device-info-config-tab {
+    background-color: var(--color-orange);
+    padding: 0 .4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    border-radius: 0px 10px 0px 0px;
+    cursor: pointer;
+    border: solid 1px var(--color-orange)
+}
+
+.device-info-config-tab:hover {
+    background-color: var(--color-black-med);
+    color: white;
+}
+
+.device-info-config-wrapper {
+    background-color: var(--color-black-dark);
+    min-height: 500px;
+    border: solid 1px var(--color-orange);
+    color: var(--color-grey-light);
+    padding: 1rem;
+}

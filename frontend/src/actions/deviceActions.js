@@ -20,7 +20,7 @@ export const getDevices = () => async (dispatch) => {
 }
 
 // RETURNS A SINGLE DEVICE AS AN OBJECT
-export const getDeviceInfo = async (device) => {
+export const getDeviceInfo = (device) => async (dispatch) => {
     const uri = `/api/v1/mydevices/device/${device}`
     const config = {
         headers: {
@@ -33,4 +33,12 @@ export const getDeviceInfo = async (device) => {
     if(deviceInfo){
         return deviceInfo.data
     }
+}
+
+export const getRunningConfig = (device) => async (dispatch) => {
+    const data = await axios.post('/api/v1/tools/get-running-config', device)
+    if (data) {
+        console.log(data)
+    }
+
 }
