@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { getDeviceInfo, getRunningConfig} from '../../actions/deviceActions';
 import { connect } from 'react-redux'
 
+import RunningConfigTab from './config-tabs/RunningConfigTab';
+
 import '../../css/mydeviceinfo.css'
 
 function DeviceInfo(props) {
@@ -10,6 +12,8 @@ function DeviceInfo(props) {
     const { getDeviceInfo } = props
     const [device, setDevice] = useState({})
     const [runningConfig, setRunningConfig] = useState('')
+    const [tab, setTab] = useState('t-running-cfg')
+
     useEffect(() => {
         const getData = async () => {
             const data = await getDeviceInfo(deviceid)
@@ -20,6 +24,45 @@ function DeviceInfo(props) {
         getData()
         // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
+
+      useEffect(() => {
+          if(tab){
+            document.getElementById(tab).classList.add('active')
+          }
+        
+      }, [tab])
+
+const handleTab = (e) => {
+    if (e.target.id === tab)
+        return
+    document.querySelectorAll('.device-info-config-tab').forEach(tab => tab.classList.remove('active'))
+    switch (e.target.id){
+        case 't-running-cfg':
+            setTab('t-running-cfg')
+            break;
+        case 't-version':
+            setTab('t-version')
+            break;
+        case 't-interfaces':
+            setTab('t-interfaces')
+            break;
+        case 't-addresses':
+            setTab('t-addresses')
+            break;
+        case 't-vlans':
+            setTab('t-vlans')
+            break;
+        case 't-cdp-neighbors':
+            setTab('t-cdp-neighbors')
+            break;
+        case 't-routing':
+            setTab('t-routing')
+            break;
+        default:
+            setTab('t-running-cfg')
+            break;
+    }
+}
 
     return (
         <div className="page-wrapper">
@@ -53,17 +96,16 @@ function DeviceInfo(props) {
                 <div className="device-info-value">{device.password && device.password}</div>
             </div>
             <div className="device-info-config-tab-wrapper">
-                <div className="device-info-config-tab">Running Config</div>
-                <div className="device-info-config-tab">Version</div>
-                <div className="device-info-config-tab">Interfaces</div>
-                <div className="device-info-config-tab">Addresses</div>
-                <div className="device-info-config-tab">Vlans</div>
-                <div className="device-info-config-tab">CDP Neighbors</div>
-                <div className="device-info-config-tab">OSPF</div>
-                <div className="device-info-config-tab">EIGRP</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-running-cfg'>Running Config</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-version'>Version</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-interfaces'>Interfaces</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-addresses'>Addresses</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-vlans'>Vlans</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-cdp-neighbors'>CDP Neighbors</div>
+                <div className="device-info-config-tab" onClick={handleTab} id='t-routing'>Routing</div>
             </div>
             <div className="device-info-config-wrapper">
-                {runningConfig && runningConfig.map((i, key) => <div key={key}>{i}</div>)}
+                {runningConfig && <RunningConfigTab cfg={runningConfig} />}
             </div>
         </div>
     )
