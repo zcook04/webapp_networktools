@@ -1,5 +1,5 @@
 import axios from 'axios'
-import setAuthToken from '../utils/setAuthToken';
+import jwt_decode from 'jwt-decode'
 
 import {
     REGISTER_SUCCESS,
@@ -13,6 +13,8 @@ import {
     CLEAR_LOADING,
     AUTH_ERROR,
   } from './actions';
+
+  const currentTime = new Date()
 
   export const setLoading = () => {
     return {
@@ -28,22 +30,27 @@ import {
   
   export const loadUser = () => async (dispatch) => {
     if (localStorage.token) {
-      setAuthToken(localStorage.token);
-    }
-    try {
-      const config = {
-        headers: {
-          'Authorization': localStorage.token,
-        },
-      };
-      const res = await axios.get('/api/v1/user/login', config)
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data,
-      });
-    } catch (err) {
-      dispatch({ type: AUTH_ERROR})
-      console.log(err)
+
+      const expired = (currentTime.getTime()/1000) > (jwt_decode(localStorage.token).exp)
+      if (!expired){
+        try {
+          const config = {
+            headers: {
+              'Authorization': localStorage.token,
+            },
+          };
+          const res = await axios.get('/api/v1/user/login', config)
+          dispatch({
+            type: USER_LOADED,
+            payload: res.data,
+          });
+        } catch (err) {
+          dispatch({ type: AUTH_ERROR})
+          console.log(err)
+        }
+      } else {
+        dispatch({type: LOGOUT})
+      }
     }
   };
   
@@ -64,7 +71,7 @@ import {
     } catch (err) {
       dispatch({
         type: REGISTER_FAIL,
-        payload: err.response.data.msg,
+        payload: err,
       });
     }
   };
@@ -79,15 +86,17 @@ import {
 
     try {
       const res = await axios.post('/api/v1/user/login', formData, config);
+      console.log(res.data)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
       });
       loadUser();
     } catch (err) {
+      console.log(err)
       dispatch({
         type: LOGIN_FAIL,
-        payload: err.response.data.msg,
+        payload: err,
       });
     }
   };

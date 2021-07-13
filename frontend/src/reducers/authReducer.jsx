@@ -56,6 +56,7 @@ const authReducer = (state = initialState, action) => {
           email: action.payload.email,
           token: action.payload.token,
           isAuthenticated: action.payload.isAuthenticated,
+          id: action.payload.id,
           loading: false,
         };
       case AUTH_ERROR:
