@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, request
 
 from Models import mongo_client
 
@@ -27,7 +27,8 @@ class RegisterUser(Resource):
             return {"result": "fail", "msg": "Email exists and must be unique"}, 409
         mongo_client.db.users.insert_one(args)
         if(args):
-            return {"isAuthenticated": True, "token": create_access_token(identity=args['email']), "user": args['username'], "email": args['email']}, 201
+            token = "Bearer " + create_access_token(identity=args['email'])
+            return {"isAuthenticated": True, "token": token, "user": args['username'], "email": args['email'], "id": str(args['_id'])}, 201
         else:
             return 500
 
@@ -46,6 +47,14 @@ class RegisterUser(Resource):
 
 
 class LoginUser(Resource):
+    @jwt_required()
+    def get(self):
+        user_email = get_jwt_identity()
+        user_token = request.headers['Authorization']
+        dbuser = mongo_client.db.users.find_one_or_404({"email": user_email})
+        if dbuser:
+            return {"isAuthenticated": True, "token": user_token, "username": dbuser['username'], "email": dbuser['email'], "id": str(dbuser['_id'])}
+
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('email', type=str, required=True)
@@ -61,7 +70,7 @@ class LoginUser(Resource):
         username = user['username']
         email = user['email']
         _id = str(user['_id'])
-        token = create_access_token(identity=email)
+        token = "Bearer " + create_access_token(identity=email)
 
         # Validate PW And Return Token
         if bcrypt.checkpw(args['password'].encode('utf8'), user['password']):

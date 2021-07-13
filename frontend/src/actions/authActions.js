@@ -11,6 +11,7 @@ import {
     CLEAR_ERRORS,
     SET_LOADING,
     CLEAR_LOADING,
+    AUTH_ERROR,
   } from './actions';
 
   export const setLoading = () => {
@@ -25,16 +26,25 @@ import {
     };
   };
   
-  export const loadUser = (userData) => async (dispatch) => {
-    if (localStorage.token === userData.token) {
+  export const loadUser = () => async (dispatch) => {
+    if (localStorage.token) {
       setAuthToken(localStorage.token);
-    } else {
-      setAuthToken(userData.token)
     }
+    try {
+      const config = {
+        headers: {
+          'Authorization': localStorage.token,
+        },
+      };
+      const res = await axios.get('/api/v1/user/login', config)
       dispatch({
         type: USER_LOADED,
-        payload: userData.data,
+        payload: res.data,
       });
+    } catch (err) {
+      dispatch({ type: AUTH_ERROR})
+      console.log(err)
+    }
   };
   
   export const register = (formData) => async (dispatch) => {
@@ -43,7 +53,6 @@ import {
         'Content-Type': 'application/json',
       },
     };
-  
     try {
       const res = await axios.post('api/v1/users/register', formData, config);
       dispatch({
@@ -66,8 +75,9 @@ import {
         'Content-Type': 'application/json',
       },
     };
+
     try {
-      const res = await axios.post('/api/v1/users/login', formData, config);
+      const res = await axios.post('/api/v1/user/login', formData, config);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,

@@ -1,18 +1,23 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import '../css/header.css'
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logout } from '../actions/authActions'
+import { logout, loadUser } from '../actions/authActions'
 
 function Header(props) {
     const { isAuthenticated, username } = props.auth
-    const { logout } = props
+    const { logout, loadUser } = props
     const history = useHistory()
 
     const logoutHandler = () => {
         logout()
         history.push('/logout')
     }
+
+    useEffect(() => {
+        loadUser()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
         <header className="header">
@@ -42,7 +47,8 @@ function Header(props) {
 }
 
 const mapDispatchToProps = {
-    logout
+    logout,
+    loadUser
 }
 
 const mapStateToProps = (state) => ({

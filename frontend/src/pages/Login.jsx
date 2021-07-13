@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import axios from 'axios'
 
-import { loadUser } from '../actions/authActions'
+import { loadUser, login } from '../actions/authActions'
 
 import '../css/login.css'
 
@@ -13,14 +12,13 @@ function Login(props) {
     const [authFailed, setAuthFailed] = useState(false)
 
     const history = useHistory()
-    const { loadUser } = props
+    const { login } = props
 
     const submitHandler = async (e) => {
         e.preventDefault()
         try {
-            const result = await axios.post('/api/v1/user/login', { "email": email, "password": password })
+            const result = login({ "email": email, "password": password })
             if (result.data.isAuthenticated) {
-                loadUser(result)
                 history.push('/')
             } else {
                 setAuthFailed(true)
@@ -64,7 +62,8 @@ function Login(props) {
 }
 
 const mapDispatchToProps = {
-    loadUser
+    loadUser,
+    login
 }
 
 const mapStateToProps = (state) => ({
