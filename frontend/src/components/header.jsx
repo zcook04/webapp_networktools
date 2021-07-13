@@ -11,7 +11,6 @@ function Header(props) {
 
     const logoutHandler = () => {
         logout()
-        history.push('/logout')
     }
 
     useEffect(() => {

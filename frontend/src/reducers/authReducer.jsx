@@ -17,6 +17,8 @@ import {
     loading: false,
     username: null,
     error: null,
+    email: null,
+    id: null
   };
   
 const authReducer = (state = initialState, action) => {
@@ -92,6 +94,9 @@ const authReducer = (state = initialState, action) => {
           isAuthenticated: false,
           loading: false,
           username: null,
+          email: null,
+          id: null,
+          error: null
         };
       case CLEAR_ERRORS:
         return {
