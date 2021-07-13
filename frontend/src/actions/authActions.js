@@ -86,7 +86,6 @@ import {
 
     try {
       const res = await axios.post('/api/v1/user/login', formData, config);
-      console.log(res.data)
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data,
