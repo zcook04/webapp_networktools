@@ -2,8 +2,6 @@ from routes.users import RegisterUser, LoginUser, AllUsers
 from routes.devices import MyDevices, DeviceInfo
 from routes.tools import RunningConfiguration
 
-from flask_pymongo import PyMongo
-
 from flask import Flask
 from flask_restful import Api
 
@@ -13,7 +11,7 @@ from dotenv import load_dotenv
 from Models import mongo_client
 
 import os
-import datetime
+from datetime import timedelta
 
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -30,7 +28,7 @@ api = Api(app)
 
 # JWT CONFIG
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
-app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(hours=1)
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 # INIT DB
