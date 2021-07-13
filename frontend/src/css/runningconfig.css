@@ -1,0 +1,20 @@
+.running-config-download-btn-div {
+    margin: 1rem 0;
+    display:flex;
+}
+
+.running-config-download-btn {
+    padding: .5rem;
+    background-color: var(--color-orange);
+    display: inline;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    border: 0;
+    font-family: var(--text-header);
+}
+
+.running-config-download-btn:hover {
+    background-color: var(--color-black-dark);
+    color: var(--color-orange)
+}
