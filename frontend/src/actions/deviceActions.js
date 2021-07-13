@@ -62,13 +62,11 @@ export const getRunningConfig = (device) => async (dispatch) => {
     const config = {
         headers: {
             'Authorization': localStorage.getItem('token'),
-            'Content-Type': 'application/json'
         }
     }
     try {
         const data = await axios.post('/api/v1/tools/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
-        const runningConfig = data.data
-        dispatch({type: UPDATE_RUNNING_CFG, payload: runningConfig})
+        dispatch({type: UPDATE_RUNNING_CFG, payload: data})
     } catch (err) {
         console.log(err)
         dispatch({type: CLEAR_LOADING})

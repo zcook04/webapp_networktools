@@ -8,7 +8,7 @@ function RunningConfigTab(props) {
     const getRunningConfig = props.getRunningConfig
     let cfg = null
     if(props.devices.activeDevice.runningConfig){
-        cfg = props.devices.activeDevice.runningConfig.split('\\n')
+        cfg = props.devices.activeDevice.runningConfig.split('\n')
     }
 
     const handleClick = (e) => {
@@ -17,12 +17,12 @@ function RunningConfigTab(props) {
 
     return (
         <>
-            {cfg && cfg.map((line, key) => <div key={key}>{line}</div>)}
-            {!cfg && <>
-            <h3>No Running Configuration Saved</h3>
             <div className="getConfig-btn" onClick={handleClick}>
-                Get Running Configuration
-            </div> 
+                {props.devices.loading ? 'Loading Config' :'Update Config'}                
+            </div>
+            {cfg && !props.devices.loading && cfg.map((line, key) => <div key={key}>{line}</div>)}
+            {!cfg && <>
+            <h3>No Running Configuration Saved</h3> 
             </>}
         </>
     )

@@ -18,7 +18,7 @@ const deviceReducer = (state = initialState, action) => {
             return { ...state, 'activeDevice': action.payload, 'loading': false}
         case UPDATE_RUNNING_CFG:
             const currentState = {...state}
-            currentState['activeDevice']['runningConfig'] = action.payload
+            currentState['activeDevice']['runningConfig'] = action.payload.data
             return { ...currentState, 'loading': false}
         default:
             return state;
