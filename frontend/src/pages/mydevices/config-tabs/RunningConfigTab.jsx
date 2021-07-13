@@ -12,7 +12,7 @@ function RunningConfigTab(props) {
     }
 
     const handleClick = (e) => {
-        getRunningConfig({'ipv4': props.devices.activeDevice.ipv4, 'username': props.devices.activeDevice.username, 'password': props.devices.activeDevice.password})
+        getRunningConfig({...props.devices.activeDevice})
     }
 
     return (

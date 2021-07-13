@@ -1,9 +1,7 @@
 import axios from 'axios'
-import { GET_DEVICES, SET_ACTIVE_DEVICE } from "./actions";
+import { CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, UPDATE_RUNNING_CFG} from "./actions";
 
 
-
-// ADDS A NEW DEVICE TO THE DEVICE LIST
 export const getDevices = () => async (dispatch) => {
     const config = {
         headers: {
@@ -36,10 +34,44 @@ export const setActiveDevice = (device) => async (dispatch) => {
     }
 }
 
+export const updateDevice = (ipv4, attr) => async (dispatch) => {
+    // PUT dictionary with single value to api. Ie {runningConfig: "value"}
+    // SUCCESSFUL POST returns new device object.
+    // deviceList gets updated.  activeDevice gets updated.
+    const uri = `/api/v1/mydevice/device/${ipv4}`
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        }
+    }
+
+    //put updated values and return updated object
+    console.log('updating device')
+    const deviceInfo = await axios.put(uri, attr, config)
+
+    //update device list
+    getDevices()
+
+    //update activeDevice
+    setActiveDevice(deviceInfo)
+}
+
 export const getRunningConfig = (device) => async (dispatch) => {
-    const data = await axios.post('/api/v1/tools/get-running-config', device)
-    if (data) {
-        console.log(data)
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+        }
+    }
+    try {
+        const data = await axios.post('/api/v1/tools/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        const runningConfig = data.data
+        dispatch({type: UPDATE_RUNNING_CFG, payload: runningConfig})
+    } catch (err) {
+        console.log(err)
+        dispatch({type: CLEAR_LOADING})
     }
 
 }

@@ -18,7 +18,7 @@ function MyDevices(props) {
         getData()
     }, [getDevices]);
 
-    const mydevices = props.devices.DeviceList
+    const mydevices = props.devices.deviceList
     if (localStorage.token) {
         return (
             <div className="page-wrapper">
