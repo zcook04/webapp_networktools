@@ -1,13 +1,12 @@
 import React, {useEffect} from 'react'
 import '../css/header.css'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout, loadUser } from '../actions/authActions'
 
 function Header(props) {
     const { isAuthenticated, username } = props.auth
     const { logout, loadUser } = props
-    const history = useHistory()
 
     const logoutHandler = () => {
         logout()
