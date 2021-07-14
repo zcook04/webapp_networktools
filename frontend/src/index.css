@@ -52,3 +52,7 @@ a:hover {
   color: white;
   cursor: pointer;
 }
+
+.hidden-content {
+  visibility: hidden;
+}

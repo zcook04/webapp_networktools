@@ -100,7 +100,7 @@ function VersionTab(props) {
         
         </div>}
 
-            {cfg && !props.devices.loading && cfg.map((line, key) => <div key={key}>{line}</div>)}
+            {cfg && !props.devices.loading && cfg.map((line, key) => <div key={key}>{line === "" ? <span className="hidden-content">!</span> : line}</div>)}
         </>
     )
 }
