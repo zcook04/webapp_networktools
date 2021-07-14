@@ -12,3 +12,6 @@
     color: var(--color-grey-light);
     background-color: var(--color-black-med);
 }
+.deviceinfo-row:before {
+    content: ' '
+}

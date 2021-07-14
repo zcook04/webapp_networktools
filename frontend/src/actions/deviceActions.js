@@ -57,9 +57,11 @@ export const updateDevice = (device) => async (dispatch) => {
     try{
         await axios.put(uri, device, config)
         dispatch({ type: UPDATE_DEVICE_SUCCESS})
+        return true
     }catch (err){
         console.log(`Update Device Failed With Error: ${err}`)
         dispatch({ type: UPDATE_DEVICE_FAIL})
+        return false
     }
     
 }
@@ -74,9 +76,11 @@ export const getRunningConfig = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_RUNNING_CFG_SUCCESS, payload: data})
+        return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_RUNNING_CFG_FAIL})
+        return false
     }
 
 }
