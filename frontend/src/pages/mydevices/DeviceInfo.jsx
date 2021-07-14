@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import RunningConfigTab from './config-tabs/RunningConfigTab';
 import VersionTab from './config-tabs/VersionTab';
+import InterfaceTab from './config-tabs/InterfaceTab';
 
 import '../../css/mydeviceinfo.css'
 
@@ -104,6 +105,7 @@ const handleTab = (e) => {
             <div className="device-info-config-wrapper">
                 {tab === 't-running-cfg' && <RunningConfigTab />}
                 {tab === 't-version' && <VersionTab />}
+                {tab === 't-interfaces' && <InterfaceTab />}
             </div>
         </div>
     )

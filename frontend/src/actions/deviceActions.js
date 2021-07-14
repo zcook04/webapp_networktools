@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { 
-    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS
+    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL
 } from "./actions";
 
 export const clearLoading = () => async (dispatch) => {
@@ -98,6 +98,24 @@ export const getShowVersion = (device) => async (dispatch) => {
     } catch (err) {
         console.log(err)
         dispatch({type: GET_SHOW_VER_FAIL})
+        return false
+    }
+}
+
+export const getShowInterface = (device) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-int-status', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_INT_SUCCESS, payload: data})
+        return true
+    } catch (err) {
+        console.log(err)
+        dispatch({type: GET_SHOW_INT_FAIL})
         return false
     }
 }
