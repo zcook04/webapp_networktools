@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { 
-    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL
+    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL, ADD_NEW_DEVICE_SUCCESS, ADD_NEW_DEVICE_FAIL
 } from "./actions";
 
 const config = {
@@ -58,9 +58,16 @@ export const updateDevice = (device) => async (dispatch) => {
     
 }
 
-export const removeDevice = (device) => async (dispatch) => {
+export const addNewDevice = (device) => async (dispatch) => {
     dispatch({type: SET_LOADING})
-
+    try {
+        axios.post(`/api/v1/mydevices/device/${device.ipv4}`, device, config)
+        dispatch({type: ADD_NEW_DEVICE_SUCCESS, payload: device})
+        return true
+    } catch (err) {
+        dispatch({type: ADD_NEW_DEVICE_FAIL})
+        return false
+    }
 }
 
 export const getRunningConfig = (device) => async (dispatch) => {

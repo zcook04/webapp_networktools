@@ -11,6 +11,11 @@ import removeDeviceImage from '../../imgs/icons/remove-device.png'
 import '../../css/mydevicecard.css'
 
 function MyDeviceCard(props) {
+
+    const handleRemoveItem = (e) => {
+        
+    }
+
     if (props.name === "Add New Device"){
         return (
             <div className="mydevicecard-card-outer-wrapper">
@@ -29,7 +34,7 @@ function MyDeviceCard(props) {
         const uri = `/mydevices/${props.ipv4}`
         return (
             <div className="mydevicecard-card-outer-wrapper">
-                <img src={removeDeviceImage} className="mydevicecard-remove-item" alt="remove device" />
+                <img src={removeDeviceImage} onClick={handleRemoveItem} className="mydevicecard-remove-item" alt="remove device" />
             <Link to={uri} >
                 <div className="mydevicecard-card-wrapper">
                     <p>{props.name || props.ipv4}</p>
