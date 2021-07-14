@@ -1,19 +1,18 @@
 import axios from 'axios'
 import { 
-    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL, ADD_NEW_DEVICE_SUCCESS, ADD_NEW_DEVICE_FAIL
+    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL, ADD_NEW_DEVICE_SUCCESS, ADD_NEW_DEVICE_FAIL, REMOVE_DEVICE_SUCCESS, REMOVE_DEVICE_FAIL, RESET_DEVICES
 } from "./actions";
-
-const config = {
-    headers: {
-        'Authorization': localStorage.getItem('token'),
-    }
-}
 
 export const clearLoading = () => async (dispatch) => {
     dispatch({type: CLEAR_LOADING})
 }
 
 export const getDevices = () => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
     const deviceList = await axios('/api/v1/mydevices', config)
     if(deviceList) {
         dispatch({type: GET_DEVICES, payload: deviceList.data})
@@ -23,8 +22,17 @@ export const getDevices = () => async (dispatch) => {
     }
 }
 
+export const resetDevices = () => async (dispatch) => {
+    dispatch({type: RESET_DEVICES})
+}
+
 // LOADS SINGLE DEVICE INTO STATE AS ACTIVE DEVICE
 export const setActiveDevice = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
     const uri = `/api/v1/mydevices/device/${device}`
     const deviceInfo = await axios(uri, config)
     if(deviceInfo){
@@ -59,18 +67,46 @@ export const updateDevice = (device) => async (dispatch) => {
 }
 
 export const addNewDevice = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         axios.post(`/api/v1/mydevices/device/${device.ipv4}`, device, config)
         dispatch({type: ADD_NEW_DEVICE_SUCCESS, payload: device})
         return true
     } catch (err) {
+        console.log(err)
         dispatch({type: ADD_NEW_DEVICE_FAIL})
         return false
     }
 }
 
+export const removeDevice = (ipv4, index) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
+    dispatch({type: SET_LOADING})
+    try {
+        axios.delete(`/api/v1/mydevices/device/${ipv4}`,config)
+        dispatch({type: REMOVE_DEVICE_SUCCESS, payload: index})
+        return true
+    } catch (err) {
+        dispatch({type: REMOVE_DEVICE_FAIL})
+        return false
+    }
+}
+
 export const getRunningConfig = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         const data = await axios.post('/api/v1/tools/ios/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
@@ -84,6 +120,11 @@ export const getRunningConfig = (device) => async (dispatch) => {
 }
 
 export const getShowVersion = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
@@ -97,6 +138,11 @@ export const getShowVersion = (device) => async (dispatch) => {
 }
 
 export const getShowInterface = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-int-status', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
@@ -110,6 +156,11 @@ export const getShowInterface = (device) => async (dispatch) => {
 }
 
 export const getShowVlans = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-vlans', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
@@ -123,6 +174,11 @@ export const getShowVlans = (device) => async (dispatch) => {
 }
 
 export const getShowCdp = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-cdp-neighbors', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
@@ -136,6 +192,11 @@ export const getShowCdp = (device) => async (dispatch) => {
 }
 
 export const getShowRouting = (device) => async (dispatch) => {
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }    
     dispatch({type: SET_LOADING})
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-ip-route', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)

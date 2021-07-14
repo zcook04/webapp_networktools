@@ -54,9 +54,7 @@ class DeviceInfo(Resource):
     # DESC   VALIDATIE JWT_ASSOCIATION AND REMOVE DEVICE FROM ASSOCIATED USER
     @jwt_required()
     def delete(self, device):
-        device_parser = reqparse.RequestParser()
-        device_parser.add_argument('ipv4', type=str, required=True)
-        ipv4 = device_parser.parse_args()['ipv4']
+        print(device, get_jwt_identity)
         mongo_client.db.devices.delete_one(
-            {'owner': get_jwt_identity(), 'ipv4': ipv4})
+            {'owner': get_jwt_identity(), 'ipv4': device})
         return 200

@@ -1,4 +1,4 @@
-import { GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, CLEAR_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_VER_FAIL, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, ADD_NEW_DEVICE_FAIL, ADD_NEW_DEVICE_SUCCESS } from '../actions/actions'
+import { GET_DEVICES, RESET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, CLEAR_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_VER_FAIL, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, ADD_NEW_DEVICE_FAIL, ADD_NEW_DEVICE_SUCCESS, REMOVE_DEVICE_SUCCESS, REMOVE_DEVICE_FAIL } from '../actions/actions'
 
 const initialState = {
     'loading': false,
@@ -14,6 +14,10 @@ const deviceReducer = (state = initialState, action) => {
             return { ...state, loading: false}
         case GET_DEVICES:
             return { ...state, 'deviceList': action.payload, 'loading': false }
+        case RESET_DEVICES:
+            return { ...state,     'loading': false,
+            'deviceList': [],
+            'activeDevice': {}}
         case SET_ACTIVE_DEVICE:
             return { ...state, 'activeDevice': action.payload, 'loading': false}
         case UPDATE_DEVICE_SUCCESS:
@@ -59,6 +63,12 @@ const deviceReducer = (state = initialState, action) => {
         case ADD_NEW_DEVICE_SUCCESS:
             return { ...state, 'loading': false, deviceList: [...state.deviceList, action.payload] }
         case ADD_NEW_DEVICE_FAIL:
+            return { ...state, 'loading': false }
+        case REMOVE_DEVICE_SUCCESS:
+            return { ...state, 'loading': false, deviceList: [
+                    ...state.deviceList.slice(0, action.payload),
+                    ...state.deviceList.slice(action.payload + 1) ]}
+        case REMOVE_DEVICE_FAIL:
             return { ...state, 'loading': false }
         default:
             return state;

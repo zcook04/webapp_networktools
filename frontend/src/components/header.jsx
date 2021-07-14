@@ -3,13 +3,15 @@ import '../css/header.css'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { logout, loadUser } from '../actions/authActions'
+import { resetDevices } from '../actions/deviceActions'
 
 function Header(props) {
     const { isAuthenticated, username } = props.auth
-    const { logout, loadUser } = props
+    const { logout, loadUser, resetDevices } = props
 
     const logoutHandler = () => {
         logout()
+        resetDevices()
     }
 
     useEffect(() => {
@@ -46,11 +48,12 @@ function Header(props) {
 
 const mapDispatchToProps = {
     logout,
-    loadUser
+    loadUser,
+    resetDevices
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.authState
+    auth: state.authState,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header)

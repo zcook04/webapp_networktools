@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 import { connect } from 'react-redux'
-import { getDevices, addNewDevice } from '../../actions/deviceActions'
+import { getDevices, removeDevice } from '../../actions/deviceActions'
 
 import iosImage from '../../imgs/icons/ios-device.png'
 import asaImage from '../../imgs/icons/asa-device.png'
@@ -11,14 +11,15 @@ import removeDeviceImage from '../../imgs/icons/remove-device.png'
 import '../../css/mydevicecard.css'
 
 function MyDeviceCard(props) {
-    const { handleAddNewDevice } = props
+    const { handleAddNewDevice, removeDevice } = props
 
     const handleClick = () => {
         handleAddNewDevice()
     }
 
-    const handleRemoveDevice = (e) => {
-
+    const handleRemoveDevice = () => {
+        const index = props.devices.deviceList.findIndex(x => x.ipv4 === props.ipv4)
+        removeDevice(props.ipv4, index)
     }
 
     if (props.name === "Add New Device"){
@@ -54,7 +55,7 @@ function MyDeviceCard(props) {
     }
 }
 
-const mapDispatchToProps = { getDevices, addNewDevice }
+const mapDispatchToProps = { getDevices, removeDevice }
 
 const mapStateToProps = (state) => ({
     auth: state.authState,

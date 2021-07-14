@@ -23,7 +23,8 @@ function MyDevices(props) {
             getDevices()
         }
         getData()
-    }, [getDevices]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const changeHandler = (e) => {
         switch (e.target.name) {
