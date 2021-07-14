@@ -1,8 +1,8 @@
-import { React, useEffect } from 'react'
+import { React, useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getDevices } from '../../actions/deviceActions'
+import { addNewDevice, getDevices } from '../../actions/deviceActions'
 import MyDeviceCard from './MyDeviceCard'
 
 import '../../css/mydevices.css'
@@ -11,6 +11,12 @@ import '../../css/mydevices.css'
 
 function MyDevices(props) {
     const { getDevices } = props
+
+    const [ipv4, setIpv4] = useState('')
+    const [deviceType, setDeviceType] = useState('cisco_ios')
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
     useEffect(() => {
         const getData = async () => {
             getDevices()
@@ -18,12 +24,50 @@ function MyDevices(props) {
         getData()
     }, [getDevices]);
 
+    const changeHandler = (e) => {
+        switch (e.target.name) {
+            case "ipv4":
+                setIpv4(e.target.value)
+                break;
+            case "deviceType":
+                setDeviceType(e.target.value)
+                break;
+            case "username":
+                setUsername(e.target.value)
+                break;
+            case "password":
+                setPassword(e.target.value)
+                break;
+            default:
+                break;
+        }
+    }
+
+    const handleAddNewDevice = () => {
+        console.log('clicked_outer')
+        //Toggle Display Block And Display None
+        document.getElementById('addNewDeviceFormWrapper').style.display === "flex" ? document.getElementById('addNewDeviceFormWrapper').style.display = "none" : document.getElementById('addNewDeviceFormWrapper').style.display = "flex"
+
+        document.getElementById('addNewDeviceFormWrapper').style.display === 'flex' && document.getElementById("device-add-ipv4-val").focus()
+    }
+
     const mydevices = props.devices.deviceList
     if (localStorage.token) {
         return (
             <div className="page-wrapper">
+                <div id="addNewDeviceFormWrapper">
+                <div id="addNewDeviceForm">
+                    <h3>Add A New Device</h3>
+                    <input type="text" placeholder="deviceType" name="deviceType" value={deviceType} onChange={changeHandler}/>
+                    <input type="text" placeholder="ipv4" id="device-add-ipv4-val" name="ipv4" value={ipv4} onChange={changeHandler}/>
+                    <input type="text" placeholder="username" name="username" value={username} onChange={changeHandler}/>
+                    <input type="text" placeholder="password" name="password" value={password} onChange={changeHandler}/>
+                    <div className="add-new-device-btn">Submit</div>
+                    <div className="add-new-device-btn-secondary">Cancel</div>
+                </div>
+                </div>
                 <div className="mydevices-cards-wrapper">
-                    <MyDeviceCard name="Add New Device" ipv4="add-new-device" deviceType="New Device"/>
+                    <MyDeviceCard handleAddNewDevice={handleAddNewDevice} name="Add New Device" ipv4="add-new-device" deviceType="New Device"/>
                     {mydevices && mydevices.map(device => {
                         return (
 

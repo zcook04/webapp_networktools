@@ -4,3 +4,77 @@
     justify-content: flex-start;
     gap: 2rem;
 }
+
+#addNewDeviceForm {
+    position: fixed;
+    z-index: 9;
+    display: flex;
+    flex-direction: column;
+    left: 50%;
+    top: 50%;
+    width: 250px;
+    min-height: 375px;
+    text-align: center;
+    background-color: white;
+    margin-top: -200px;
+    margin-left: -200px;
+    gap: 1rem;
+    padding: .5rem 2rem;
+    border: solid 1px var(--color-orange);
+    border-radius: 10px;
+    background-color: var(--color-black-dark);
+}
+
+#addNewDeviceForm h3 {
+    margin: .25rem;
+    color: var(--color-orange)
+}
+
+#addNewDeviceForm input {
+    padding: 1rem;
+    border-radius: 10px;
+    color: var(--color-grey-med);
+    background-color: var(--color-black-med);
+    border: none;
+}
+
+#addNewDeviceForm input:focus {
+    outline: 1px groove var(--color-orange);
+}
+
+.add-new-device-btn {
+    padding: .5rem;
+    background-color: var(--color-orange);
+    display: inline;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    border: 0;
+    font-family: var(--text-header);
+    border: 1px solid var(--color-orange);
+    border-radius: 10px;
+}
+
+.add-new-device-btn:hover {
+    background-color: var(--color-black-dark);
+    color: var(--color-orange)
+}
+
+.add-new-device-btn-secondary {
+    padding: .5rem;
+    background-color: var(--color-orange);
+    display: inline;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    border: 0;
+    font-family: var(--text-header);
+    border: 1px solid var(--color-orange);
+    border-radius: 10px;
+    margin-bottom: .6rem;
+}
+
+.add-new-device-btn-secondary:hover {
+    background-color: var(--color-black-dark);
+    color: var(--color-orange)
+}
