@@ -18,3 +18,9 @@
     background-color: var(--color-black-dark);
     color: var(--color-orange)
 }
+
+.deviceupdate-row {
+    display: flex;
+    justify-content: left;
+    gap: 1rem;
+}

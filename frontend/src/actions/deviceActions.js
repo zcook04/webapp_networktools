@@ -1,6 +1,11 @@
 import axios from 'axios'
-import { CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, UPDATE_RUNNING_CFG, UPDATE_SUCCESSFUL, UPDATE_FAILED} from "./actions";
+import { 
+    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL
+} from "./actions";
 
+export const clearLoading = () => async (dispatch) => {
+    dispatch({type: CLEAR_LOADING})
+}
 
 export const getDevices = () => async (dispatch) => {
     const config = {
@@ -38,7 +43,7 @@ export const updateDevice = (device) => async (dispatch) => {
     // PUT dictionary with single value to api. Ie {runningConfig: "value"}
     // SUCCESSFUL POST returns new device object.
     // deviceList gets updated.  activeDevice gets updated.
-    const uri = `/api/v1/mydevice/device/${device.ipv4}`
+    const uri = `/api/v1/mydevices/device/${device.ipv4}`
     const config = {
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -47,13 +52,14 @@ export const updateDevice = (device) => async (dispatch) => {
     }
 
     //put updated values and return updated object
-    console.log('updating device')
+
     dispatch({type: SET_LOADING})
     try{
         await axios.put(uri, device, config)
-        dispatch({ type: UPDATE_SUCCESSFUL})
-    }catch{
-        dispatch({ type: UPDATE_FAILED})
+        dispatch({ type: UPDATE_DEVICE_SUCCESS})
+    }catch (err){
+        console.log(`Update Device Failed With Error: ${err}`)
+        dispatch({ type: UPDATE_DEVICE_FAIL})
     }
     
 }
@@ -67,10 +73,10 @@ export const getRunningConfig = (device) => async (dispatch) => {
     }
     try {
         const data = await axios.post('/api/v1/tools/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
-        dispatch({type: UPDATE_RUNNING_CFG, payload: data})
+        dispatch({type: GET_RUNNING_CFG_SUCCESS, payload: data})
     } catch (err) {
         console.log(err)
-        dispatch({type: CLEAR_LOADING})
+        dispatch({type: GET_RUNNING_CFG_FAIL})
     }
 
 }

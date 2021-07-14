@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { getRunningConfig, updateDevice } from '../../../actions/deviceActions'
 
@@ -11,22 +11,29 @@ function RunningConfigTab(props) {
         cfg = props.devices.activeDevice.runningConfig.split('\n')
     }
 
-    const handleClick = () => {
+    const handleGetConfig = () => {
         getRunningConfig({...props.devices.activeDevice})
     }
 
-    useEffect(() => {
-        if(props.devices.activeDevice.runningConfig){
+    const handleSaveConfig = () => {
+        if (props.devices.activeDevice.runningConfig ){
             updateDevice(props.devices.activeDevice)
+        } else {
+            console.log('No Running-Configuration To Save.')
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.devices.activeDevice])
+        
+    }
 
     return (
         <>
-            <div className="getConfig-btn" onClick={handleClick}>
-                {props.devices.loading ? 'Loading Config' :'Update Config'}                
+        <div className="deviceupdate-row">
+            <div className="getConfig-btn" onClick={handleGetConfig}>
+                Get Updated Config                
             </div>
+            <div className="getConfig-btn" onClick={handleSaveConfig}>
+                Save Current Config              
+            </div>
+        </div>
             {cfg && !props.devices.loading && cfg.map((line, key) => <div key={key}>{line}</div>)}
             {!cfg && <>
             <h3>No Running Configuration Saved</h3> 
