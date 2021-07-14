@@ -23,6 +23,7 @@ function MyDevices(props) {
         return (
             <div className="page-wrapper">
                 <div className="mydevices-cards-wrapper">
+                    <MyDeviceCard name="Add New Device" ipv4="add-new-device" deviceType="New Device"/>
                     {mydevices && mydevices.map(device => {
                         return (
 

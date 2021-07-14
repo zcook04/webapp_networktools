@@ -2,6 +2,7 @@ footer {
     color: var(--color-orange);
     background-color: var(--color-black-dark);
     height: 100px;
+    z-index: 10;
 }
 
 .footer-wrapper {

@@ -1,25 +1,43 @@
+.mydevicecard-card-outer-wrapper {
+    position: relative;
+    width: 175px;
+    max-width: 175px;
+    min-height: 200px;
+    margin-top: 1rem;
+    padding: 0;
+}
+
+.mydevicecard-remove-item {
+    z-index: 1;
+    position: absolute;
+    max-height: 40px;
+    top: -10px;
+    left: -10px;
+}
+
+.mydevicecard-remove-item:hover {
+    cursor: pointer;
+    max-height: 44px;
+    top: -11px;
+    left: -11px;
+}
+
 .mydevicecard-card-wrapper {
     flex: 1;
     border: 0px solid var(--color-orange);
     border-radius: 10px;
     background-color: var(--color-black-dark);
-    display: inline;
-    max-width: 200px;
+    width: 175px;
+    max-width: 175px;
     min-height: 200px;
-    /* box-shadow: 0px 0px 20px -5px var(--color-orange); */
+    max-height: 200px;
+    box-shadow: 0px 0px 12px -5px var(--color-orange);
     padding: .5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.mydevicecard-card-wrapper:active {
-    box-shadow: 0px 0px 15px -5px var(--color-orange);
-}
-
-.mydevicecard-card-wrapper:hover {
-    cursor: pointer;
-    box-shadow: 0px 0px 9px -5px var(--color-orange);
+    z-index: -2;
+    position: relative;
 }
 
 .mydevicecard-card-wrapper p {

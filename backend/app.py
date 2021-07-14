@@ -2,7 +2,7 @@ from routes.users import RegisterUser, LoginUser, AllUsers
 from routes.devices import MyDevices, DeviceInfo
 from routes.tools import IosGetConfig
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import Api
 
 from flask_jwt_extended import JWTManager
@@ -49,7 +49,8 @@ api.add_resource(RegisterUser, '/api/v1/user/register')
 api.add_resource(LoginUser, '/api/v1/user/login')
 api.add_resource(AllUsers, '/api/v1/users')
 
-# Uncomment for production.
+
+# ------------------------UNCOMMENT FOR PRODUCTION
 # @app.route("/")
 # def index():
 #     return render_template('index.html')
