@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { 
-    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL
+    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL
 } from "./actions";
 
 export const clearLoading = () => async (dispatch) => {
@@ -121,10 +121,55 @@ export const getShowInterface = (device) => async (dispatch) => {
 }
 
 export const getShowVlans = (device) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-vlans', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_VLAN_SUCCESS, payload: data})
+        return true
+    } catch (err) {
+        console.log(err)
+        dispatch({type: GET_SHOW_VLAN_FAIL})
+        return false
+    }
 }
 
 export const getShowCdp = (device) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-cdp-neighbors', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_CDP_SUCCESS, payload: data})
+        return true
+    } catch (err) {
+        console.log(err)
+        dispatch({type: GET_SHOW_CDP_FAIL})
+        return false
+    }
 }
 
 export const getShowRouting = (device) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-ip-route', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_ROUTE_SUCCESS, payload: data})
+        return true
+    } catch (err) {
+        console.log(err)
+        dispatch({type: GET_SHOW_ROUTE_FAIL})
+        return false
+    }
 }
