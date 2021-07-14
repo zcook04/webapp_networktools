@@ -19,6 +19,7 @@ import MyDevices from './pages/mydevices/MyDevices'
 // COMPONENTS
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import ScrollToTop from "./components/ScrollToTop"
 
 // MODULES
 import {
@@ -32,6 +33,7 @@ function App() {
     <div>
       <Router>
       <Header />
+      <ScrollToTop />
         <Switch>
           <Route path="/tools/ios/running-config" component={RunningConfig} />
           <Route exact path="/tools/ios" component={IosTools} />
