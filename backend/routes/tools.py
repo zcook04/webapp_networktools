@@ -38,7 +38,7 @@ class IosGetConfig(Resource):
                 conf += "\n\n\n\n\n"
                 conf += ssh_connection.send_command('show vlan')
             elif command == 'get-show-cdp-neighbors':
-                conf = ssh_connection.send_command('show cdp neighbors brief')
+                conf = ssh_connection.send_command('show cdp neighbors')
                 conf += "\n\n\n\n\n"
                 conf += ssh_connection.send_command(
                     'show cdp neighbors detail')
@@ -48,7 +48,7 @@ class IosGetConfig(Resource):
                 ssh_connection.disconnectio()
                 return 404
             ssh_connection.disconnect()
-            if "Invalid Input detected at" in conf:
+            if "Invalid input detected" in conf:
                 raise InvalidInputDetected
             if "Ambiguous command:" in conf:
                 raise AmbiguousCommand
