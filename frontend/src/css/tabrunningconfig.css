@@ -1,17 +1,32 @@
-.getConfig-btn {
-    display: inline-block;
-    background-color: var(--color-orange);
-    color: black;
-    font-weight: 700;
-    cursor: pointer;
-    padding: .5rem;
+.deviceupdate-row {
     margin: 1rem 0;
 }
 
-.getConfig-btn:hover {
-    color: var(--color-grey-light);
-    background-color: var(--color-black-med);
+.getConfig-btn {
+    padding: .5rem;
+    background-color: var(--color-orange);
+    display: inline;
+    color: black;
+    font-weight: 700;
+    cursor: pointer;
+    border: 0;
+    font-family: var(--text-header);
+    border: 1px solid var(--color-orange)
 }
-.deviceinfo-row:before {
-    content: ' '
+
+.getConfig-btn:hover {
+    background-color: var(--color-black-dark);
+    color: var(--color-orange)
+}
+.deviceinfo-row {
+    min-height: 20px;
+    display: flex;
+
+    align-content: center;
+}
+
+.deviceinfo-row p {
+    padding: 0;
+    margin: 0;
+    color: var(--color-orange);
 }

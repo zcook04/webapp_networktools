@@ -24,7 +24,7 @@ function RunningConfigTab(props) {
     const handleGetConfig = async () => {
         const successful = await getRunningConfig({...props.devices.activeDevice})
         if (successful){
-            sendInfoMessage('Updated Configuration')
+            sendInfoMessage('Configuration Updated Successfully')
         } else{
             sendInfoMessage('Error Updating Configuration')
         }
@@ -43,18 +43,38 @@ function RunningConfigTab(props) {
         }   
     }
 
+    const handleDeleteConfig = () => {
+        if (props.devices.activeDevice.runningConfig ){
+            const activeDevice = props.devices.activeDevice
+            activeDevice['runningConfig'] = ''
+            const successful = updateDevice(activeDevice)
+            if(successful) {
+                sendInfoMessage('Configuration Deleted Successfully')
+            } else {
+                sendInfoMessage('An Error Occurred Deleting From Database.')
+            }
+        } else {
+            sendInfoMessage('No Configuration To Delete.')
+        }   
+    }
+
     return (
         <>
+
         <div className="deviceinfo-row">
             <p>{msg && msg}</p>
         </div>
+
         {props.devices.loading ? <h3>Please Wait...</h3> 
         :<div className="deviceupdate-row">
             <div className="getConfig-btn" onClick={handleGetConfig}>
-                Get Updated Config                
+                Get Updated Config              
             </div>
             <div className="getConfig-btn" onClick={handleSaveConfig}>
-                Save Current Config              
+                Save             
+            </div>
+            <div className="getConfig-btn" onClick={handleDeleteConfig}>
+                Delete             
             </div>
         </div>}
 
