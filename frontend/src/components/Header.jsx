@@ -13,7 +13,7 @@ function Header(props) {
         logout()
         resetDevices()
     }
-
+    
     useEffect(() => {
         loadUser()
         // eslint-disable-next-line react-hooks/exhaustive-deps
