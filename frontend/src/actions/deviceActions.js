@@ -74,7 +74,7 @@ export const getRunningConfig = (device) => async (dispatch) => {
         }
     }
     try {
-        const data = await axios.post('/api/v1/tools/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        const data = await axios.post('/api/v1/tools/ios/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_RUNNING_CFG_SUCCESS, payload: data})
         return true
     } catch (err) {
@@ -92,7 +92,7 @@ export const getShowVersion = (device) => async (dispatch) => {
         }
     }
     try {
-        const data = await axios.post('/api/v1/tools/show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        const data = await axios.post('/api/v1/tools/ios/show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_VER_SUCCESS, payload: data})
         return true
     } catch (err) {

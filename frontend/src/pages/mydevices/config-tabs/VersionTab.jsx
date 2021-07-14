@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getRunningConfig, updateDevice } from '../../../actions/deviceActions'
+import { getShowVersion, updateDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function VersionTab(props) {
+    const { getShowVersion } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -21,7 +22,7 @@ function VersionTab(props) {
     }
 
     const handleGetConfig = async () => {
-        const successful = await getRunningConfig({...props.devices.activeDevice})
+        const successful = await getShowVersion({...props.devices.activeDevice})
         if (successful){
             sendInfoMessage('Configuration Updated Successfully')
         } else{
@@ -30,7 +31,7 @@ function VersionTab(props) {
     }
 
     const handleSaveConfig = () => {
-        if (props.devices.activeDevice.runningConfig ){
+        if (props.devices.activeDevice.showVersion ){
             const successful = updateDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
@@ -105,7 +106,7 @@ function VersionTab(props) {
 }
 
 const mapDispatchToProps = {
-    getRunningConfig,
+    getShowVersion,
     updateDevice
 }
 
