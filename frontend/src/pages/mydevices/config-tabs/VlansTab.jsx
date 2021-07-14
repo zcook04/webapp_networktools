@@ -46,7 +46,7 @@ function VlansTab(props) {
     const handleDeleteConfig = () => {
         if (props.devices.activeDevice.showVlans ){
             const activeDevice = props.devices.activeDevice
-            activeDevice['showVersion'] = ''
+            activeDevice['showVlans'] = ''
             const successful = updateDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')

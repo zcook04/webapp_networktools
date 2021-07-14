@@ -46,7 +46,7 @@ function InterfaceTab(props) {
     const handleDeleteConfig = () => {
         if (props.devices.activeDevice.interfaceStatus ){
             const activeDevice = props.devices.activeDevice
-            activeDevice['showVersion'] = ''
+            activeDevice['interfaceStatus'] = ''
             const successful = updateDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')

@@ -4,6 +4,7 @@ from netmiko import ConnectHandler, NetMikoAuthenticationException
 from netmiko.ssh_exception import NetmikoTimeoutException
 
 from utils.TerminalOutput import msg
+from utils.Exceptions import InvalidInputDetected, AmbiguousCommand
 
 # Init Parent Parser For IOS Devices.
 ios_device_parser = reqparse.RequestParser()
@@ -33,16 +34,32 @@ class IosGetConfig(Resource):
                 conf += ssh_connection.send_command('show ip interface')
             elif command == 'get-show-vlans':
                 conf = ssh_connection.send_command(
-                    'show vlan brief\nshow vlan')
+                    'show vlan brief')
+                conf += "\n\n\n\n\n"
+                conf += ssh_connection.send_command('show vlan')
             elif command == 'get-show-cdp-neighbors':
-                conf = ssh_connection.send_command(
-                    'show cdp neighbors brief\nshow cdp neighbors detail')
+                conf = ssh_connection.send_command('show cdp neighbors brief')
+                conf += "\n\n\n\n\n"
+                conf += ssh_connection.send_command(
+                    'show cdp neighbors detail')
             elif command == 'get-show-ip-route':
                 conf = ssh_connection.send_command('show ip route')
             else:
                 ssh_connection.disconnectio()
                 return 404
             ssh_connection.disconnect()
+            if "Invalid Input detected at" in conf:
+                raise InvalidInputDetected
+            if "Ambiguous command:" in conf:
+                raise AmbiguousCommand
+        except InvalidInputDetected as error:
+            msg(
+                f'Config retrieval from device {ipv4} failed. Returned Invalid Input Detected')
+            return {"Error": "Command Not Accepted By Device: Returned Invalid Input Detected"}, 204
+        except AmbiguousCommand as error:
+            msg(
+                f'Config retrieval from device {ipv4} failed. Returned AmbiguousCommand')
+            return {"Error": "Command Not Accepted By Device: Returned AmbiguousCommand"}, 204
         except NetmikoTimeoutException as error:
             msg(f'Connection to device {ipv4} failed. Returning 403')
             return {"Error": f'Connection Timeout {error}'}, 403

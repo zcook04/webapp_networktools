@@ -46,7 +46,7 @@ function RoutingTab(props) {
     const handleDeleteConfig = () => {
         if (props.devices.activeDevice.showRouting ){
             const activeDevice = props.devices.activeDevice
-            activeDevice['showVersion'] = ''
+            activeDevice['showRouting'] = ''
             const successful = updateDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')

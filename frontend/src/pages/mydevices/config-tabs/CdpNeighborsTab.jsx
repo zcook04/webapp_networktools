@@ -46,7 +46,7 @@ function CdpNeighborsTab(props) {
     const handleDeleteConfig = () => {
         if (props.devices.activeDevice.showCdp ){
             const activeDevice = props.devices.activeDevice
-            activeDevice['showVersion'] = ''
+            activeDevice['showCdp'] = ''
             const successful = updateDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
