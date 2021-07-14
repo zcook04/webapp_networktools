@@ -59,6 +59,12 @@ function MyDevices(props) {
             return
         }
 
+        if(!props.devices.deviceList.findIndex(device => device.ipv4 === ipv4)){
+            setErr('Ip Addresses Must Be A Unique Value.')
+            setTimeout(() => setErr(null), 3000)
+            return
+        }
+
         const success = addNewDevice({'deviceType': deviceType, 'ipv4': ipv4, 'username': username, 'password': password})
         if(!success) {
             setErr('An Error Occurred')
