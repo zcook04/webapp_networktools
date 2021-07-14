@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, UPDATE_RUNNING_CFG} from "./actions";
+import { CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, UPDATE_RUNNING_CFG, UPDATE_SUCCESSFUL, UPDATE_FAILED} from "./actions";
 
 
 export const getDevices = () => async (dispatch) => {
@@ -34,11 +34,11 @@ export const setActiveDevice = (device) => async (dispatch) => {
     }
 }
 
-export const updateDevice = (ipv4, attr) => async (dispatch) => {
+export const updateDevice = (device) => async (dispatch) => {
     // PUT dictionary with single value to api. Ie {runningConfig: "value"}
     // SUCCESSFUL POST returns new device object.
     // deviceList gets updated.  activeDevice gets updated.
-    const uri = `/api/v1/mydevice/device/${ipv4}`
+    const uri = `/api/v1/mydevice/device/${device.ipv4}`
     const config = {
         headers: {
             'Authorization': localStorage.getItem('token'),
@@ -48,13 +48,14 @@ export const updateDevice = (ipv4, attr) => async (dispatch) => {
 
     //put updated values and return updated object
     console.log('updating device')
-    const deviceInfo = await axios.put(uri, attr, config)
-
-    //update device list
-    getDevices()
-
-    //update activeDevice
-    setActiveDevice(deviceInfo)
+    dispatch({type: SET_LOADING})
+    try{
+        await axios.put(uri, device, config)
+        dispatch({ type: UPDATE_SUCCESSFUL})
+    }catch{
+        dispatch({ type: UPDATE_FAILED})
+    }
+    
 }
 
 export const getRunningConfig = (device) => async (dispatch) => {

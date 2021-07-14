@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getRunningConfig } from '../../../actions/deviceActions'
+import { getRunningConfig, updateDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabrunningconfig.css'
 
 function RunningConfigTab(props) {
-    const getRunningConfig = props.getRunningConfig
+    const {getRunningConfig, updateDevice} = props
     let cfg = null
     if(props.devices.activeDevice.runningConfig){
         cfg = props.devices.activeDevice.runningConfig.split('\n')
@@ -14,6 +14,13 @@ function RunningConfigTab(props) {
     const handleClick = (e) => {
         getRunningConfig({...props.devices.activeDevice})
     }
+
+    useEffect(() => {
+        if(props.devices.activeDevice.runningConfig){
+            updateDevice(props.devices.activeDevice)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [props.devices.activeDevice])
 
     return (
         <>
@@ -29,7 +36,8 @@ function RunningConfigTab(props) {
 }
 
 const mapDispatchToProps = {
-    getRunningConfig
+    getRunningConfig,
+    updateDevice
 }
 
 const mapStateToProps = (state) => ({

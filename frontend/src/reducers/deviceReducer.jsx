@@ -1,4 +1,4 @@
-import { GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, CLEAR_LOADING, UPDATE_RUNNING_CFG } from '../actions/actions'
+import { GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, CLEAR_LOADING, UPDATE_RUNNING_CFG, UPDATE_SUCCESSFUL, UPDATE_FAILED } from '../actions/actions'
 
 const initialState = {
     'loading': false,
@@ -20,6 +20,10 @@ const deviceReducer = (state = initialState, action) => {
             const currentState = {...state}
             currentState['activeDevice']['runningConfig'] = action.payload.data
             return { ...currentState, 'loading': false}
+        case UPDATE_SUCCESSFUL:
+            return { ...state, 'loading': false }
+        case UPDATE_FAILED:
+            return { ...state, 'loading': false }
         default:
             return state;
     }
