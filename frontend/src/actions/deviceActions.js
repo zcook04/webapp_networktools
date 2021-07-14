@@ -119,3 +119,12 @@ export const getShowInterface = (device) => async (dispatch) => {
         return false
     }
 }
+
+export const getShowVlans = (device) => async (dispatch) => {
+}
+
+export const getShowCdp = (device) => async (dispatch) => {
+}
+
+export const getShowRouting = (device) => async (dispatch) => {
+}

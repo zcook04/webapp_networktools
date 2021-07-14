@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getShowInterface, updateDevice } from '../../../actions/deviceActions'
+import { getShowRouting, updateDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function RoutingTab(props) {
-    const { getShowInterface, updateDevice } = props
+    const { getShowRouting, updateDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
-    if(props.devices.activeDevice.interfaceStatus){
-        cfg = props.devices.activeDevice.interfaceStatus.split('\n')
+    if(props.devices.activeDevice.showRouting){
+        cfg = props.devices.activeDevice.showRouting.split('\n')
     }
 
     const sendInfoMessage = (msg) => {
@@ -22,7 +22,7 @@ function RoutingTab(props) {
     }
 
     const handleGetConfig = async () => {
-        const successful = await getShowInterface({...props.devices.activeDevice})
+        const successful = await getShowRouting({...props.devices.activeDevice})
         if (successful){
             sendInfoMessage('Configuration Updated Successfully')
         } else{
@@ -31,7 +31,7 @@ function RoutingTab(props) {
     }
 
     const handleSaveConfig = () => {
-        if (props.devices.activeDevice.interfaceStatus ){
+        if (props.devices.activeDevice.showRouting ){
             const successful = updateDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
@@ -44,7 +44,7 @@ function RoutingTab(props) {
     }
 
     const handleDeleteConfig = () => {
-        if (props.devices.activeDevice.interfaceStatus ){
+        if (props.devices.activeDevice.showRouting ){
             const activeDevice = props.devices.activeDevice
             activeDevice['showVersion'] = ''
             const successful = updateDevice(activeDevice)
@@ -64,7 +64,7 @@ function RoutingTab(props) {
         const d = date.getDay()
         const y = date.getFullYear()
         const element = document.createElement('a');
-        const f = new Blob([props.devices.activeDevice.interfaceStatus.replace('\n', "\r\n")])
+        const f = new Blob([props.devices.activeDevice.showRouting.replace('\n', "\r\n")])
         element.href = URL.createObjectURL(f)
         element.download = `${props.devices.activeDevice.ipv4}-conf-${m}-${d}-${y}.txt`
         document.body.appendChild(element)
@@ -106,7 +106,7 @@ function RoutingTab(props) {
 }
 
 const mapDispatchToProps = {
-    getShowInterface,
+    getShowRouting,
     updateDevice
 }
 

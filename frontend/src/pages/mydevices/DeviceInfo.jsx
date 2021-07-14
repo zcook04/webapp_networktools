@@ -6,6 +6,9 @@ import { connect } from 'react-redux'
 import RunningConfigTab from './config-tabs/RunningConfigTab';
 import VersionTab from './config-tabs/VersionTab';
 import InterfaceTab from './config-tabs/InterfaceTab';
+import VlansTab from './config-tabs/VlansTab';
+import CdpNeighborsTab from './config-tabs/CdpNeighborsTab';
+import RoutingTab from './config-tabs/RoutingTab';
 
 import '../../css/mydeviceinfo.css'
 
@@ -102,6 +105,9 @@ const handleTab = (e) => {
                 {tab === 't-running-cfg' && <RunningConfigTab />}
                 {tab === 't-version' && <VersionTab />}
                 {tab === 't-interfaces' && <InterfaceTab />}
+                {tab === 't-vlans' && <VlansTab />}
+                {tab === 't-cdp-neighbors' && <CdpNeighborsTab />}
+                {tab === 't-routing' && <RoutingTab />}
             </div>
         </div>
     )
