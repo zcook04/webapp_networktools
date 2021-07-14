@@ -5,7 +5,7 @@ import { getShowVersion, updateDevice } from '../../../actions/deviceActions'
 import '../../../css/tabconfig.css'
 
 function VersionTab(props) {
-    const { getShowVersion } = props
+    const { getShowVersion, updateDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -44,9 +44,9 @@ function VersionTab(props) {
     }
 
     const handleDeleteConfig = () => {
-        if (props.devices.activeDevice.runningConfig ){
+        if (props.devices.activeDevice.showVersion ){
             const activeDevice = props.devices.activeDevice
-            activeDevice['runningConfig'] = ''
+            activeDevice['showVersion'] = ''
             const successful = updateDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
@@ -64,7 +64,7 @@ function VersionTab(props) {
         const d = date.getDay()
         const y = date.getFullYear()
         const element = document.createElement('a');
-        const f = new Blob([props.devices.activeDevice.runningConfig.replace('\n', "\r\n")])
+        const f = new Blob([props.devices.activeDevice.showVersion.replace('\n', "\r\n")])
         element.href = URL.createObjectURL(f)
         element.download = `${props.devices.activeDevice.ipv4}-conf-${m}-${d}-${y}.txt`
         document.body.appendChild(element)

@@ -1,6 +1,6 @@
 from routes.users import RegisterUser, LoginUser, AllUsers
 from routes.devices import MyDevices, DeviceInfo
-from routes.tools import RunningConfiguration
+from routes.tools import IosGetConfig
 
 from flask import Flask
 from flask_restful import Api
@@ -37,8 +37,8 @@ mongo_client.init_app(app)
 
 
 # TOOL ROUTES
-api.add_resource(RunningConfiguration,
-                 '/api/v1/tools/get-running-config')
+api.add_resource(IosGetConfig,
+                 '/api/v1/tools/ios/<string:command>')
 
 # DEVICE ROUTES
 api.add_resource(MyDevices, '/api/v1/mydevices')

@@ -92,7 +92,7 @@ export const getShowVersion = (device) => async (dispatch) => {
         }
     }
     try {
-        const data = await axios.post('/api/v1/tools/ios/show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        const data = await axios.post('/api/v1/tools/ios/get-show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_VER_SUCCESS, payload: data})
         return true
     } catch (err) {
