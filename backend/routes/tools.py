@@ -20,6 +20,19 @@ class IosGetConfig(Resource):
                 conf = ssh_connection.send_command('show running-config')
             elif command == 'get-show-version':
                 conf = ssh_connection.send_command('show version')
+            elif command == 'get-show-int-status':
+                conf = ssh_connection.send_command('show ip interface status')
+            elif command == 'get-show-ip-int-br':
+                conf = ssh_connection.send_command(
+                    'show ip interface brief | ex una')
+            elif command == 'get-show-vlans':
+                conf = ssh_connection.send_command(
+                    'show vlan brief\nshow vlan')
+            elif command == 'get-show-cdp-neighbors':
+                conf = ssh_connection.send_command(
+                    'show cdp neighbors brief\nshow cdp neighbors detail')
+            elif command == 'get-show-ip-route':
+                conf = ssh_connection.send_command('show ip route')
             else:
                 ssh_connection.disconnectio()
                 return 404
