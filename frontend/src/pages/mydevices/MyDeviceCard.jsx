@@ -29,9 +29,7 @@ function MyDeviceCard(props) {
         const uri = `/mydevices/${props.ipv4}`
         return (
             <div className="mydevicecard-card-outer-wrapper">
-            <Link to="/">
                 <img src={removeDeviceImage} className="mydevicecard-remove-item" alt="remove device" />
-            </Link>
             <Link to={uri} >
                 <div className="mydevicecard-card-wrapper">
                     <p>{props.name || props.ipv4}</p>

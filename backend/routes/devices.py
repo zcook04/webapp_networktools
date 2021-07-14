@@ -32,8 +32,11 @@ class DeviceInfo(Resource):
         device_parser.add_argument('deviceType', type=str, required=True)
         args = device_parser.parse_args()
         args['owner'] = get_jwt_identity()
-        mongo_client.db.devices.insert_one(args)
-        return 201
+        if not args['owner']:
+            return 401
+        else:
+            mongo_client.db.devices.insert_one(args)
+            return 201
 
     # DESC   VALIDATE JWT_ASSOCIATION AND UPDATE DEVICE VALUES
     @jwt_required()
