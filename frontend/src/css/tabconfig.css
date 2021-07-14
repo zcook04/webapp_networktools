@@ -1,3 +1,8 @@
+.deviceupdate-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
 .deviceupdate-row {
     margin: 1rem 0;
 }

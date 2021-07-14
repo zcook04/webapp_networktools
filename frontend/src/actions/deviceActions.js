@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { 
-    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL
+    CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS
 } from "./actions";
 
 export const clearLoading = () => async (dispatch) => {
@@ -82,5 +82,22 @@ export const getRunningConfig = (device) => async (dispatch) => {
         dispatch({type: GET_RUNNING_CFG_FAIL})
         return false
     }
+}
 
+export const getShowVersion = (device) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
+    try {
+        const data = await axios.post('/api/v1/tools/show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_VER_SUCCESS, payload: data})
+        return true
+    } catch (err) {
+        console.log(err)
+        dispatch({type: GET_SHOW_VER_FAIL})
+        return false
+    }
 }
