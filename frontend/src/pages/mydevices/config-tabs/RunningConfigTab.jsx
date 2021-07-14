@@ -11,7 +11,7 @@ function RunningConfigTab(props) {
         cfg = props.devices.activeDevice.runningConfig.split('\n')
     }
 
-    const handleClick = (e) => {
+    const handleClick = () => {
         getRunningConfig({...props.devices.activeDevice})
     }
 
