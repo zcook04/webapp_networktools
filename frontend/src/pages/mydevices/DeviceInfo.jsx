@@ -44,9 +44,6 @@ const handleTab = (e) => {
         case 't-interfaces':
             setTab('t-interfaces')
             break;
-        case 't-addresses':
-            setTab('t-addresses')
-            break;
         case 't-vlans':
             setTab('t-vlans')
             break;
@@ -97,7 +94,6 @@ const handleTab = (e) => {
                 <div className="device-info-config-tab" onClick={handleTab} id='t-running-cfg'>Running Config</div>
                 <div className="device-info-config-tab" onClick={handleTab} id='t-version'>Version</div>
                 <div className="device-info-config-tab" onClick={handleTab} id='t-interfaces'>Interfaces</div>
-                <div className="device-info-config-tab" onClick={handleTab} id='t-addresses'>Addresses</div>
                 <div className="device-info-config-tab" onClick={handleTab} id='t-vlans'>Vlans</div>
                 <div className="device-info-config-tab" onClick={handleTab} id='t-cdp-neighbors'>CDP Neighbors</div>
                 <div className="device-info-config-tab" onClick={handleTab} id='t-routing'>Routing</div>

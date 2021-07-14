@@ -38,14 +38,12 @@ class DeviceInfo(Resource):
     # DESC   VALIDATE JWT_ASSOCIATION AND UPDATE DEVICE VALUES
     @jwt_required()
     def put(self, device):
-        print(request.get_json())
         device_parser = reqparse.RequestParser()
         device_parser.add_argument('ipv4', type=str, required=True)
         device_parser.add_argument('deviceType', type=str, required=True)
         device_parser.add_argument('username', type=str, required=True)
         device_parser.add_argument('password', type=str, required=True)
         args = device_parser.parse_args()
-        print(request.get_json())
         mongo_client.db.devices.find_one_and_update(
             {'owner': get_jwt_identity(), 'ipv4': device}, {"$set": request.get_json()})
         return 200
