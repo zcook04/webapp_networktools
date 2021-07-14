@@ -10,12 +10,13 @@ import '../../css/mydevices.css'
 //Needs to be a protected page.
 
 function MyDevices(props) {
-    const { getDevices } = props
+    const { getDevices, addNewDevice } = props
 
     const [ipv4, setIpv4] = useState('')
     const [deviceType, setDeviceType] = useState('cisco_ios')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [err, setErr] = useState(null)
 
     useEffect(() => {
         const getData = async () => {
@@ -44,11 +45,32 @@ function MyDevices(props) {
     }
 
     const handleAddNewDevice = () => {
-        console.log('clicked_outer')
         //Toggle Display Block And Display None
         document.getElementById('addNewDeviceFormWrapper').style.display === "flex" ? document.getElementById('addNewDeviceFormWrapper').style.display = "none" : document.getElementById('addNewDeviceFormWrapper').style.display = "flex"
 
         document.getElementById('addNewDeviceFormWrapper').style.display === 'flex' && document.getElementById("device-add-ipv4-val").focus()
+    }
+
+    const handleSubmit = () => {
+        if (!ipv4 || !deviceType || !username || !password){
+            setErr('All fields are required')
+            setTimeout(() => setErr(null), 3000)
+            return
+        }
+
+        const success = addNewDevice({'deviceType': deviceType, 'ipv4': ipv4, 'username': username, 'password': password})
+        if(!success) {
+            setErr('An Error Occurred')
+            setTimeout(() => setErr(null), 3000)
+        } else {
+            setErr('Success')
+            setTimeout(() => {
+                setErr('')}, 1500)
+        }
+    }
+
+    const handleCancel = () => {
+        document.getElementById('addNewDeviceFormWrapper').style.display = "none"
     }
 
     const mydevices = props.devices.deviceList
@@ -58,12 +80,13 @@ function MyDevices(props) {
                 <div id="addNewDeviceFormWrapper">
                 <div id="addNewDeviceForm">
                     <h3>Add A New Device</h3>
+                    {err && <h5>{err}</h5>}
                     <input type="text" placeholder="deviceType" name="deviceType" value={deviceType} onChange={changeHandler}/>
                     <input type="text" placeholder="ipv4" id="device-add-ipv4-val" name="ipv4" value={ipv4} onChange={changeHandler}/>
                     <input type="text" placeholder="username" name="username" value={username} onChange={changeHandler}/>
                     <input type="text" placeholder="password" name="password" value={password} onChange={changeHandler}/>
-                    <div className="add-new-device-btn">Submit</div>
-                    <div className="add-new-device-btn-secondary">Cancel</div>
+                    <div className="add-new-device-btn" onClick={handleSubmit}>Submit</div>
+                    <div className="add-new-device-btn-secondary" onClick={handleCancel}>Cancel</div>
                 </div>
                 </div>
                 <div className="mydevices-cards-wrapper">
@@ -95,7 +118,7 @@ function MyDevices(props) {
 
 }
 
-const mapDispatchToProps = { getDevices }
+const mapDispatchToProps = { getDevices, addNewDevice }
 
 const mapStateToProps = (state) => ({
     auth: state.authState,

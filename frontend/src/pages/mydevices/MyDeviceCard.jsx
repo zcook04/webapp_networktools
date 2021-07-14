@@ -14,7 +14,6 @@ function MyDeviceCard(props) {
     const { handleAddNewDevice } = props
 
     const handleClick = () => {
-        console.log('clicked inner')
         handleAddNewDevice()
     }
 
