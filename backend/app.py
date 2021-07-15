@@ -20,6 +20,7 @@ load_dotenv('.env')
 
 MONGO_URI = os.getenv('MONGO_URI')
 JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
+DEPLOYMENT_MODE = os.getenv('DEPLOYMENT_MODE')
 
 # INIT APP
 app = Flask(__name__, static_folder='../frontend/build/static',
@@ -50,10 +51,10 @@ api.add_resource(LoginUser, '/api/v1/user/login')
 api.add_resource(AllUsers, '/api/v1/users')
 
 
-# ------------------------UNCOMMENT FOR PRODUCTION
-# @app.route("/")
-# def index():
-#     return render_template('index.html')
+if DEPLOYMENT_MODE and DEPLOYMENT_MODE != 'DEV':
+    @app.route("/")
+    def index():
+        return render_template('index.html')
 
 
 if __name__ == '__main__':
