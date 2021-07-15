@@ -1,14 +1,27 @@
 version: '3'
 services:
-  web:
+  frontend_dev:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.dev.frontend
     ports:
       - '3000:3000'
-    container_name: net_webapp_frontend
+    image: net_webapp_frontend_dev
     volumes:
       - /app/node_modules
       - ./frontend:/app
     environment:
       - CHOKIDAR_USEPOLLING=true
+  backend_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev.backend
+    ports:
+      - '5000:5000'
+    image: net_webapp_backend_dev
+    volumes:
+      - ./backend:/app
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    env_file:
+      - ./backend/.env

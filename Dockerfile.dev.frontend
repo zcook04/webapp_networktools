@@ -7,5 +7,6 @@ RUN npm install
 
 
 COPY ./frontend/. .
+RUN npm config set proxy=http://webapp_networktools_backend_dev1:5000
 
 CMD ["npm", "run", "start"]
