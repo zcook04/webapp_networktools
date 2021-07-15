@@ -56,3 +56,11 @@ a:hover {
 .hidden-content {
   visibility: hidden;
 }
+
+.page-under-construction {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

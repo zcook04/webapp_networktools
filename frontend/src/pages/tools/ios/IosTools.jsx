@@ -1,10 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+
+import ConstructionPage from '../../../imgs/icons/page-under-construction.png'
+
 
 function IosTools() {
     return (
         <div className="page-wrapper">
-            <Link to='/tools/ios/running-config'>Get Running Configuration</Link>
+            <div className="page-under-construction">
+                <h1>Sorry, Page Under Construction</h1>
+                <img src={ConstructionPage} alt="Page Under Construction" />
+            </div>
         </div>
     )
 }

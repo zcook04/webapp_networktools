@@ -1,9 +1,13 @@
 import React from 'react'
+import ConstructionPage from '../../imgs/icons/page-under-construction.png'
 
 function Configure() {
     return (
         <div className="page-wrapper">
-            Configure Devices Page Template
+            <div className="page-under-construction">
+                <h1>Sorry, Page Under Construction</h1>
+                <img src={ConstructionPage} alt="Page Under Construction" />
+            </div>
         </div>
     )
 }
