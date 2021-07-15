@@ -2,11 +2,11 @@ version: '3'
 services:
   frontend_dev:
     build:
-      context: .
-      dockerfile: Dockerfile.dev.frontend
+      context: ./frontend
+      dockerfile: Dockerfile.dev
     ports:
       - '3000:3000'
-    image: net_webapp_frontend_dev
+    image: frontend_dev
     volumes:
       - /app/node_modules
       - ./frontend:/app
@@ -14,11 +14,11 @@ services:
       - CHOKIDAR_USEPOLLING=true
   backend_dev:
     build:
-      context: .
-      dockerfile: Dockerfile.dev.backend
+      context: ./backend
+      dockerfile: Dockerfile.dev
     ports:
       - '5000:5000'
-    image: net_webapp_backend_dev
+    image: backend_dev
     volumes:
       - ./backend:/app
     environment:

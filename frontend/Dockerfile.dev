@@ -1,0 +1,12 @@
+FROM node:alpine
+
+WORKDIR '/app'
+
+COPY ./package.json .
+RUN npm install
+
+
+COPY . .
+RUN npm config set proxy=http://backend_dev1:5000
+
+CMD ["npm", "run", "start"]
