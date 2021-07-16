@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getShowVlans, updateDevice } from '../../../actions/deviceActions'
+import { getShowVlans, saveActiveDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function VlansTab(props) {
-    const { getShowVlans, updateDevice } = props
+    const { getShowVlans, saveActiveDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -32,7 +32,7 @@ function VlansTab(props) {
 
     const handleSaveConfig = () => {
         if (props.devices.activeDevice.showVlans ){
-            const successful = updateDevice(props.devices.activeDevice)
+            const successful = saveActiveDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
             } else {
@@ -47,7 +47,7 @@ function VlansTab(props) {
         if (props.devices.activeDevice.showVlans ){
             const activeDevice = props.devices.activeDevice
             activeDevice['showVlans'] = ''
-            const successful = updateDevice(activeDevice)
+            const successful = saveActiveDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
             } else {
@@ -107,7 +107,7 @@ function VlansTab(props) {
 
 const mapDispatchToProps = {
     getShowVlans,
-    updateDevice
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({

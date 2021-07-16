@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getShowInterface, updateDevice } from '../../../actions/deviceActions'
+import { getShowInterface, saveActiveDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function InterfaceTab(props) {
-    const { getShowInterface, updateDevice } = props
+    const { getShowInterface, saveActiveDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -32,7 +32,7 @@ function InterfaceTab(props) {
 
     const handleSaveConfig = () => {
         if (props.devices.activeDevice.interfaceStatus ){
-            const successful = updateDevice(props.devices.activeDevice)
+            const successful = saveActiveDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
             } else {
@@ -47,7 +47,7 @@ function InterfaceTab(props) {
         if (props.devices.activeDevice.interfaceStatus ){
             const activeDevice = props.devices.activeDevice
             activeDevice['interfaceStatus'] = ''
-            const successful = updateDevice(activeDevice)
+            const successful = saveActiveDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
             } else {
@@ -107,7 +107,7 @@ function InterfaceTab(props) {
 
 const mapDispatchToProps = {
     getShowInterface,
-    updateDevice
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({

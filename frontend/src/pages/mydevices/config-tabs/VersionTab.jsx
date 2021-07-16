@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getShowVersion, updateDevice } from '../../../actions/deviceActions'
+import { getShowVersion, saveActiveDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function VersionTab(props) {
-    const { getShowVersion, updateDevice } = props
+    const { getShowVersion, saveActiveDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -32,7 +32,7 @@ function VersionTab(props) {
 
     const handleSaveConfig = () => {
         if (props.devices.activeDevice.showVersion ){
-            const successful = updateDevice(props.devices.activeDevice)
+            const successful = saveActiveDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
             } else {
@@ -47,7 +47,7 @@ function VersionTab(props) {
         if (props.devices.activeDevice.showVersion ){
             const activeDevice = props.devices.activeDevice
             activeDevice['showVersion'] = ''
-            const successful = updateDevice(activeDevice)
+            const successful = saveActiveDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
             } else {
@@ -107,7 +107,7 @@ function VersionTab(props) {
 
 const mapDispatchToProps = {
     getShowVersion,
-    updateDevice
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({

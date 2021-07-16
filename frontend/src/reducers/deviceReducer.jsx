@@ -2,6 +2,7 @@ import { GET_DEVICES, RESET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, CLEAR_LOADI
 
 const initialState = {
     'loading': false,
+    'loadingMsg': null,
     'deviceList': [],
     'activeDevice': {}
 }
@@ -9,7 +10,7 @@ const initialState = {
 const deviceReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_LOADING:
-            return { ...state, loading: action.payload || true }
+            return { ...state, loading: true, loadingMsg: action.payload || null }
         case CLEAR_LOADING:
             return { ...state, loading: false}
         case GET_DEVICES:

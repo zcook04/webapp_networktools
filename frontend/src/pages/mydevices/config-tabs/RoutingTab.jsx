@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getShowRouting, updateDevice } from '../../../actions/deviceActions'
+import { getShowRouting, saveActiveDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function RoutingTab(props) {
-    const { getShowRouting, updateDevice } = props
+    const { getShowRouting, saveActiveDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -32,7 +32,7 @@ function RoutingTab(props) {
 
     const handleSaveConfig = () => {
         if (props.devices.activeDevice.showRouting ){
-            const successful = updateDevice(props.devices.activeDevice)
+            const successful = saveActiveDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
             } else {
@@ -47,7 +47,7 @@ function RoutingTab(props) {
         if (props.devices.activeDevice.showRouting ){
             const activeDevice = props.devices.activeDevice
             activeDevice['showRouting'] = ''
-            const successful = updateDevice(activeDevice)
+            const successful = saveActiveDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
             } else {
@@ -107,7 +107,7 @@ function RoutingTab(props) {
 
 const mapDispatchToProps = {
     getShowRouting,
-    updateDevice
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({

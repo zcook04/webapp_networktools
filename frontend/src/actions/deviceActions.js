@@ -42,7 +42,7 @@ export const setActiveDevice = (device) => async (dispatch) => {
     }
 }
 
-export const updateDevice = (device) => async (dispatch) => {
+export const saveActiveDevice = (device) => async (dispatch) => {
     // PUT dictionary with single value to api. Ie {runningConfig: "value"}
     // SUCCESSFUL POST returns new device object.
     // deviceList gets updated.  activeDevice gets updated.

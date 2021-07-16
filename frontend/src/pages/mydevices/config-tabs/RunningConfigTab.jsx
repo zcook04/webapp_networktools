@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getRunningConfig, updateDevice } from '../../../actions/deviceActions'
+import { getRunningConfig, saveActiveDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function RunningConfigTab(props) {
-    const {getRunningConfig, updateDevice} = props
+    const {getRunningConfig, saveActiveDevice} = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -32,7 +32,7 @@ function RunningConfigTab(props) {
 
     const handleSaveConfig = () => {
         if (props.devices.activeDevice.runningConfig ){
-            const successful = updateDevice(props.devices.activeDevice)
+            const successful = saveActiveDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
             } else {
@@ -47,7 +47,7 @@ function RunningConfigTab(props) {
         if (props.devices.activeDevice.runningConfig ){
             const activeDevice = props.devices.activeDevice
             activeDevice['runningConfig'] = ''
-            const successful = updateDevice(activeDevice)
+            const successful = saveActiveDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
             } else {
@@ -107,7 +107,7 @@ function RunningConfigTab(props) {
 
 const mapDispatchToProps = {
     getRunningConfig,
-    updateDevice
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({

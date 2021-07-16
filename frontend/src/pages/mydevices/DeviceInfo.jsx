@@ -67,10 +67,14 @@ const handleUpdateDevice = async () => {
     return info
 }
 
+
+
     return (
         <div className="page-wrapper">
             <h1>My Device: {props.devices.activeDevice.name ? props.devices.activeDevice.name : "Unnamed Device"}</h1>
-            <div className="update-device-all-btn" onClick={handleUpdateDevice}>Update Device</div>
+            <div className="update-device-all-btn" onClick={handleUpdateDevice}>
+                {props.devices.loading && props.devices.loadingMsg ? props.devices.loadingMsg : 'Update Device'}
+            </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Serial Number</div>
                 <div className="device-info-value">{props.devices.activeDevice.sn && props.devices.activeDevice.sn}</div>

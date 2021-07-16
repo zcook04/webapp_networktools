@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { getShowCdp, updateDevice } from '../../../actions/deviceActions'
+import { getShowCdp, saveActiveDevice } from '../../../actions/deviceActions'
 
 import '../../../css/tabconfig.css'
 
 function CdpNeighborsTab(props) {
-    const { getShowCdp, updateDevice } = props
+    const { getShowCdp, saveActiveDevice } = props
     const [msg, setMsg] = useState('')
     let msgTimeout
     let cfg = null
@@ -32,7 +32,7 @@ function CdpNeighborsTab(props) {
 
     const handleSaveConfig = () => {
         if (props.devices.activeDevice.showCdp ){
-            const successful = updateDevice(props.devices.activeDevice)
+            const successful = saveActiveDevice(props.devices.activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Saved Successfully')
             } else {
@@ -47,7 +47,7 @@ function CdpNeighborsTab(props) {
         if (props.devices.activeDevice.showCdp ){
             const activeDevice = props.devices.activeDevice
             activeDevice['showCdp'] = ''
-            const successful = updateDevice(activeDevice)
+            const successful = saveActiveDevice(activeDevice)
             if(successful) {
                 sendInfoMessage('Configuration Deleted Successfully')
             } else {
@@ -107,7 +107,7 @@ function CdpNeighborsTab(props) {
 
 const mapDispatchToProps = {
     getShowCdp,
-    updateDevice
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({
