@@ -15,10 +15,10 @@ prod.b:
 	docker compose -f docker-compose-prod build
 
 prod.u:
-	docker compose -f docker-compose-prod build
+	docker compose -f docker-compose-prod up
 
 prod.d:
-	docker compose -f docker-compose-prod build
+	docker compose -f docker-compose-prod down
 
 prod.ub:
-	docker compose -f docker-compose-prod build
+	docker compose -f docker-compose-prod up --build
