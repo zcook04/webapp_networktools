@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import { setActiveDevice, getRunningConfig} from '../../actions/deviceActions';
+import { setActiveDevice, getRunningConfig, getDeviceInfo} from '../../actions/deviceActions';
 import { connect } from 'react-redux'
 
 import RunningConfigTab from './config-tabs/RunningConfigTab';
@@ -14,7 +14,7 @@ import '../../css/mydeviceinfo.css'
 
 function DeviceInfo(props) {
     const { deviceid } = useParams()
-    const { setActiveDevice } = props
+    const { setActiveDevice, getDeviceInfo } = props
 
     const [tab, setTab] = useState('t-running-cfg')
 
@@ -62,9 +62,15 @@ const handleTab = (e) => {
     }
 }
 
+const handleUpdateDevice = async () => {
+    const info = await getDeviceInfo(props.devices.activeDevice)
+    return info
+}
+
     return (
         <div className="page-wrapper">
             <h1>My Device: {props.devices.activeDevice.name ? props.devices.activeDevice.name : "Unnamed Device"}</h1>
+            <div className="update-device-all-btn" onClick={handleUpdateDevice}>Update Device</div>
             <div className="device-info-kv">
                 <div className="device-info-key">Serial Number</div>
                 <div className="device-info-value">{props.devices.activeDevice.sn && props.devices.activeDevice.sn}</div>
@@ -115,6 +121,7 @@ const handleTab = (e) => {
 
 const mapDispatchToTops = {
     getRunningConfig,
+    getDeviceInfo,
     setActiveDevice
 }
 

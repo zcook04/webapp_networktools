@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import { 
     CLEAR_LOADING, GET_DEVICES, SET_ACTIVE_DEVICE, SET_LOADING, GET_RUNNING_CFG_SUCCESS, GET_RUNNING_CFG_FAIL, UPDATE_DEVICE_SUCCESS, UPDATE_DEVICE_FAIL, GET_SHOW_VER_FAIL, GET_SHOW_VER_SUCCESS, GET_SHOW_INT_SUCCESS, GET_SHOW_INT_FAIL, GET_SHOW_CDP_SUCCESS, GET_SHOW_CDP_FAIL, GET_SHOW_ROUTE_SUCCESS, GET_SHOW_ROUTE_FAIL, GET_SHOW_VLAN_SUCCESS, GET_SHOW_VLAN_FAIL, ADD_NEW_DEVICE_SUCCESS, ADD_NEW_DEVICE_FAIL, REMOVE_DEVICE_SUCCESS, REMOVE_DEVICE_FAIL, RESET_DEVICES
 } from "./actions";
@@ -207,4 +208,81 @@ export const getShowRouting = (device) => async (dispatch) => {
         dispatch({type: GET_SHOW_ROUTE_FAIL})
         return false
     }
+}
+
+export const getDeviceInfo = (device) => async (dispatch) => {
+    dispatch({type: SET_LOADING})
+    const config = {
+        headers: {
+            'Authorization': localStorage.getItem('token'),
+        }
+    }
+    
+    // Track which configurations have been gathered successfully.
+    const deviceConfigSuccess = []
+
+    // RunningConfig Data
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_RUNNING_CFG_SUCCESS, payload: data})
+        deviceConfigSuccess.push('runningConfigData')
+    
+    } catch (err) {
+        console.log('Error retrieving contents of the command "show version"');
+    }     
+
+    // Version Data
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_VER_SUCCESS, payload: data})
+        deviceConfigSuccess.push('versionData')
+    
+    } catch (err) {
+        console.log('Error retrieving contents of the command "show version"');
+    }  
+
+    // Interface Data
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-int-status', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_INT_SUCCESS, payload: data})
+        deviceConfigSuccess.push('interfaceData')
+    
+    } catch (err) {
+        console.log('Error retrieving contents of the command "show ip interface brief"');
+    }
+
+    // VLAN Data
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-vlans', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_VLAN_SUCCESS, payload: data})
+        deviceConfigSuccess.push('vlanData')
+    
+    } catch (err) {
+        console.log('Error retrieving contents of the command "show vlan"');
+    }
+
+    // CDP Data
+    try {
+        const data = await axios.post('/api/v1/tools/ios/get-show-cdp-neighbors', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_CDP_SUCCESS, payload: data})
+        deviceConfigSuccess.push('cdpData')
+    
+    } catch (err) {
+        console.log('Error retrieving contents of the command "show cdp neighbors"');
+    }
+
+
+    // Routing Data
+    try {
+        const routingData = await axios.post('/api/v1/tools/ios/get-show-ip-route', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
+        dispatch({type: GET_SHOW_ROUTE_SUCCESS, payload: routingData})
+        deviceConfigSuccess.push('routingData')
+    
+    } catch (err) {
+        console.log('Error retrieving contents of the command "show ip route"');
+    }
+
+    dispatch({ type: CLEAR_LOADING })
+
+    return deviceConfigSuccess
 }
