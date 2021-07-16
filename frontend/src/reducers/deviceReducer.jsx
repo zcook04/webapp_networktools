@@ -25,39 +25,27 @@ const deviceReducer = (state = initialState, action) => {
         case UPDATE_DEVICE_FAIL:
             return { ...state, 'loading': false }
         case GET_RUNNING_CFG_SUCCESS:
-            const runConfState = {...state}
-            runConfState['activeDevice']['runningConfig'] = action.payload.data
-            return { ...runConfState, 'loading': false}
+            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, runningConfig: action.payload.data }}
         case GET_RUNNING_CFG_FAIL:
             return { ...state, 'loading': false}
         case GET_SHOW_VER_SUCCESS:
-            const showVerState = {...state}
-            showVerState['activeDevice']['showVersion'] = action.payload.data
-            return { ...showVerState, 'loading': false}
+            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showVersion: action.payload.data }}
         case GET_SHOW_VER_FAIL:
             return { ...state, 'loading': false }
         case GET_SHOW_INT_SUCCESS:
-            const showIntState = {...state}
-            showIntState['activeDevice']['interfaceStatus'] = action.payload.data
-            return { ...showIntState, 'loading': false}
+            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, interfaceStatus: action.payload.data }}
         case GET_SHOW_INT_FAIL:
             return { ...state, 'loading': false }
         case GET_SHOW_VLAN_SUCCESS:
-            const showVlanState = {...state}
-            showVlanState['activeDevice']['showVlan'] = action.payload.data
-            return { ...showVlanState, 'loading': false}
+            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showVlan: action.payload.data }}
         case GET_SHOW_VLAN_FAIL:
             return { ...state, 'loading': false }
         case GET_SHOW_CDP_SUCCESS:
-            const showCdpState = {...state}
-            showCdpState['activeDevice']['showCdp'] = action.payload.data
-            return { ...showCdpState, 'loading': false}
+            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showCdp: action.payload.data }}
         case GET_SHOW_CDP_FAIL:
             return { ...state, 'loading': false }
         case GET_SHOW_ROUTE_SUCCESS:
-            const showRouteState = {...state}
-            showRouteState['activeDevice']['showRouting'] = action.payload.data
-            return { ...showRouteState, 'loading': false}
+            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showRouting: action.payload.data }}
         case GET_SHOW_ROUTE_FAIL:
             return { ...state, 'loading': false }
         case ADD_NEW_DEVICE_SUCCESS:
