@@ -30,19 +30,6 @@ function CdpNeighborsTab(props) {
         }
     }
 
-    const handleSaveConfig = () => {
-        if (props.devices.activeDevice.showCdp ){
-            const successful = saveActiveDevice(props.devices.activeDevice)
-            if(successful) {
-                sendInfoMessage('Configuration Saved Successfully')
-            } else {
-                sendInfoMessage('An Error Occurred Saving To Database.')
-            }
-        } else {
-            sendInfoMessage('No Configuration To Save.')
-        }   
-    }
-
     const handleDeleteConfig = () => {
         if (props.devices.activeDevice.showCdp ){
             const activeDevice = props.devices.activeDevice
@@ -90,9 +77,6 @@ function CdpNeighborsTab(props) {
                 </div>
             </div>
             <div className="deviceupdate-row">
-                <div className="getConfig-btn" onClick={handleSaveConfig}>
-                    Save             
-                </div>
                 <div className="getConfig-btn" onClick={handleDeleteConfig}>
                     Delete             
                 </div>
