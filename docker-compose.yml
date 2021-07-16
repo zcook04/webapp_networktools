@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - '3000:3000'
-    image: frontend_dev
+    image: surreal29/network-webapp-dev-client
     volumes:
       - /app/node_modules
       - ./frontend:/app
@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - '5000:5000'
-    image: backend_dev
+    image: surreal29/network-webapp-dev-api
     volumes:
       - ./backend:/app
     environment:
