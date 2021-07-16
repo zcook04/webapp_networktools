@@ -17,6 +17,12 @@
     flex: 3;
 }
 
+.update-device-wrapper {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-start;
+}
+
 .update-device-all-btn {
     padding: .5rem;
     background-color: var(--color-orange);

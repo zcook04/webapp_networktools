@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import { setActiveDevice, getRunningConfig, getDeviceInfo} from '../../actions/deviceActions';
+import { setActiveDevice, getRunningConfig, getDeviceInfo, saveActiveDevice} from '../../actions/deviceActions';
 import { connect } from 'react-redux'
 
 import RunningConfigTab from './config-tabs/RunningConfigTab';
@@ -14,7 +14,7 @@ import '../../css/mydeviceinfo.css'
 
 function DeviceInfo(props) {
     const { deviceid } = useParams()
-    const { setActiveDevice, getDeviceInfo } = props
+    const { setActiveDevice, getDeviceInfo, saveActiveDevice } = props
 
     const [tab, setTab] = useState('t-running-cfg')
 
@@ -67,13 +67,28 @@ const handleUpdateDevice = async () => {
     return info
 }
 
+const handleSaveDevice = () => {
+    saveActiveDevice(props.devices.activeDevice)
+}
 
+const handleDownloadAll = () => {
+    return
+}
 
     return (
         <div className="page-wrapper">
             <h1>My Device: {props.devices.activeDevice.name ? props.devices.activeDevice.name : "Unnamed Device"}</h1>
-            <div className="update-device-all-btn" onClick={handleUpdateDevice}>
-                {props.devices.loading && props.devices.loadingMsg ? props.devices.loadingMsg : 'Update Device'}
+            <div className="update-device-wrapper">
+            {props.devices.loading ? "Please wait, Loading..." :
+                <><div className="update-device-all-btn" onClick={handleUpdateDevice}>
+                    Update Device
+                </div>
+                <div className="update-device-all-btn" onClick={handleSaveDevice}>
+                    Save Device
+                </div>
+                <div className="update-device-all-btn" onClick={handleDownloadAll}>
+                    Download All
+                </div></>}
             </div>
             <div className="device-info-kv">
                 <div className="device-info-key">Serial Number</div>
@@ -126,7 +141,8 @@ const handleUpdateDevice = async () => {
 const mapDispatchToTops = {
     getRunningConfig,
     getDeviceInfo,
-    setActiveDevice
+    setActiveDevice,
+    saveActiveDevice
 }
 
 const mapStateToProps = (state) => ({
