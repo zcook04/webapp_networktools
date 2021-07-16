@@ -83,7 +83,8 @@
     color: var(--color-orange)
 }
 
-#addNewDeviceForm h5 {
+#addNewDeviceForm h4 {
     margin: 0;
     padding: 0;
+    color: var(--color-orange);
 }

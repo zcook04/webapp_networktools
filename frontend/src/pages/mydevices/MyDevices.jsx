@@ -52,14 +52,17 @@ function MyDevices(props) {
         document.getElementById('addNewDeviceFormWrapper').style.display === 'flex' && document.getElementById("device-add-ipv4-val").focus()
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
         if (!ipv4 || !deviceType || !username || !password){
             setErr('All fields are required')
             setTimeout(() => setErr(null), 3000)
             return
         }
 
-        if(!props.devices.deviceList.findIndex(device => device.ipv4 === ipv4)){
+        const addressExists = props.devices.deviceList.filter(device => device.ipv4 === ipv4)
+
+        if(addressExists.length !== 0){
             setErr('Ip Addresses Must Be A Unique Value.')
             setTimeout(() => setErr(null), 3000)
             return
@@ -84,17 +87,16 @@ function MyDevices(props) {
     if (localStorage.token) {
         return (
             <div className="page-wrapper">
-                <div id="addNewDeviceFormWrapper">
-                <div id="addNewDeviceForm">
-                    <h3>Add A New Device</h3>
-                    {err && <h5>{err}</h5>}
+                <div id="addNewDeviceFormWrapper">  
+                    <form action="" id="addNewDeviceForm">
+                    {err ? <h4>{err}</h4> : <h4>Add A New Device</h4> }
                     <input type="text" placeholder="deviceType" name="deviceType" value={deviceType} onChange={changeHandler}/>
                     <input type="text" placeholder="ipv4" id="device-add-ipv4-val" name="ipv4" value={ipv4} onChange={changeHandler}/>
                     <input type="text" placeholder="username" name="username" value={username} onChange={changeHandler}/>
                     <input type="text" placeholder="password" name="password" value={password} onChange={changeHandler}/>
-                    <div className="add-new-device-btn" onClick={handleSubmit}>Submit</div>
-                    <div className="add-new-device-btn-secondary" onClick={handleCancel}>Cancel</div>
-                </div>
+                    <input type="submit" className="add-new-device-btn" onClick={handleSubmit}/>
+                    <div className="add-new-device-btn-secondary" onClick={handleCancel}>Close</div>
+                    </form>
                 </div>
                 <div className="mydevices-cards-wrapper">
                     <MyDeviceCard handleAddNewDevice={handleAddNewDevice} name="Add New Device" ipv4="add-new-device" deviceType="New Device"/>
@@ -108,7 +110,6 @@ function MyDevices(props) {
                                 hasConfig={device.runningConfig}
                                 lastUpdate={device.lastUpdate}
                             />
-
                         )
                     })}
                 </div>
