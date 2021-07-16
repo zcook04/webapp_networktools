@@ -35,6 +35,11 @@
     border: 1px solid var(--color-orange);
 }
 
+.update-device-all-btn:hover {
+    background-color: var(--color-black-dark);
+    color: var(--color-orange)
+}
+
 .device-info-config-tab-wrapper {
     height: 30px;
     display: flex;
