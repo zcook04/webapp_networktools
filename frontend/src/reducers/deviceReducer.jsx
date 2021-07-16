@@ -9,7 +9,7 @@ const initialState = {
 const deviceReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_LOADING:
-            return { ...state, loading: true}
+            return { ...state, loading: action.payload || true }
         case CLEAR_LOADING:
             return { ...state, loading: false}
         case GET_DEVICES:
@@ -25,29 +25,29 @@ const deviceReducer = (state = initialState, action) => {
         case UPDATE_DEVICE_FAIL:
             return { ...state, 'loading': false }
         case GET_RUNNING_CFG_SUCCESS:
-            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, runningConfig: action.payload.data }}
+            return { ...state, activeDevice: { ...state.activeDevice, runningConfig: action.payload.data }}
         case GET_RUNNING_CFG_FAIL:
-            return { ...state, 'loading': false}
+            return { ...state, }
         case GET_SHOW_VER_SUCCESS:
-            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showVersion: action.payload.data }}
+            return { ...state, activeDevice: { ...state.activeDevice, showVersion: action.payload.data }}
         case GET_SHOW_VER_FAIL:
-            return { ...state, 'loading': false }
+            return { ...state }
         case GET_SHOW_INT_SUCCESS:
-            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, interfaceStatus: action.payload.data }}
+            return { ...state, activeDevice: { ...state.activeDevice, interfaceStatus: action.payload.data }}
         case GET_SHOW_INT_FAIL:
-            return { ...state, 'loading': false }
+            return { ...state }
         case GET_SHOW_VLAN_SUCCESS:
-            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showVlan: action.payload.data }}
+            return { ...state, activeDevice: { ...state.activeDevice, showVlan: action.payload.data }}
         case GET_SHOW_VLAN_FAIL:
-            return { ...state, 'loading': false }
+            return { ...state }
         case GET_SHOW_CDP_SUCCESS:
-            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showCdp: action.payload.data }}
+            return { ...state, activeDevice: { ...state.activeDevice, showCdp: action.payload.data }}
         case GET_SHOW_CDP_FAIL:
-            return { ...state, 'loading': false }
+            return { ...state }
         case GET_SHOW_ROUTE_SUCCESS:
-            return { ...state, 'loading': false, activeDevice: { ...state.activeDevice, showRouting: action.payload.data }}
+            return { ...state, activeDevice: { ...state.activeDevice, showRouting: action.payload.data }}
         case GET_SHOW_ROUTE_FAIL:
-            return { ...state, 'loading': false }
+            return { ...state }
         case ADD_NEW_DEVICE_SUCCESS:
             return { ...state, 'loading': false, deviceList: [...state.deviceList, action.payload] }
         case ADD_NEW_DEVICE_FAIL:

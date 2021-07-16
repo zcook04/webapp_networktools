@@ -112,10 +112,12 @@ export const getRunningConfig = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/ios/get-running-config', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_RUNNING_CFG_SUCCESS, payload: data})
+        dispatch({ type: CLEAR_LOADING })
         return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_RUNNING_CFG_FAIL})
+        dispatch({ type: CLEAR_LOADING })
         return false
     }
 }
@@ -130,10 +132,12 @@ export const getShowVersion = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-version', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_VER_SUCCESS, payload: data})
+        dispatch({ type: CLEAR_LOADING })
         return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_SHOW_VER_FAIL})
+        dispatch({ type: CLEAR_LOADING })
         return false
     }
 }
@@ -148,10 +152,12 @@ export const getShowInterface = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-int-status', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_INT_SUCCESS, payload: data})
+        dispatch({ type: CLEAR_LOADING })
         return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_SHOW_INT_FAIL})
+        dispatch({ type: CLEAR_LOADING })
         return false
     }
 }
@@ -166,10 +172,12 @@ export const getShowVlans = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-vlans', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_VLAN_SUCCESS, payload: data})
+        dispatch({ type: CLEAR_LOADING })
         return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_SHOW_VLAN_FAIL})
+        dispatch({ type: CLEAR_LOADING })
         return false
     }
 }
@@ -184,10 +192,12 @@ export const getShowCdp = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-cdp-neighbors', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_CDP_SUCCESS, payload: data})
+        dispatch({ type: CLEAR_LOADING })
         return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_SHOW_CDP_FAIL})
+        dispatch({ type: CLEAR_LOADING })
         return false
     }
 }
@@ -202,16 +212,18 @@ export const getShowRouting = (device) => async (dispatch) => {
     try {
         const data = await axios.post('/api/v1/tools/ios/get-show-ip-route', {"ipv4": device.ipv4, "username": device.username, "password": device.password}, config)
         dispatch({type: GET_SHOW_ROUTE_SUCCESS, payload: data})
+        dispatch({ type: CLEAR_LOADING })
         return true
     } catch (err) {
         console.log(err)
         dispatch({type: GET_SHOW_ROUTE_FAIL})
+        dispatch({ type: CLEAR_LOADING })
         return false
     }
 }
 
 export const getDeviceInfo = (device) => async (dispatch) => {
-    dispatch({type: SET_LOADING})
+    dispatch({type: SET_LOADING, payload: 'Updating Device'})
     const config = {
         headers: {
             'Authorization': localStorage.getItem('token'),
