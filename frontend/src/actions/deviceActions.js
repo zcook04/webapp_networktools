@@ -241,6 +241,8 @@ export const getDeviceInfo = (device) => async (dispatch) => {
     
     } catch (err) {
         console.log('Error retrieving contents of the command "show version"');
+        dispatch({type: CLEAR_LOADING})
+        return false
     }     
 
     // Version Data

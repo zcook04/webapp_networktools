@@ -12,7 +12,7 @@ const deviceReducer = (state = initialState, action) => {
         case SET_LOADING:
             return { ...state, loading: true, loadingMsg: action.payload || null }
         case CLEAR_LOADING:
-            return { ...state, loading: false}
+            return { ...state, loading: false, loadingMsg: null}
         case GET_DEVICES:
             return { ...state, 'deviceList': action.payload, 'loading': false }
         case RESET_DEVICES:
